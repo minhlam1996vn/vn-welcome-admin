@@ -14,8 +14,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Styles -->
     @vite(['resources/css/admin.css'])
+    @stack('styles')
 </head>
 
 <body>
@@ -27,6 +28,7 @@
 
             <main class="content">
                 <div class="container-fluid p-0">
+                    <x-alert />
 
                     <h1 class="h3 mb-3"><strong>VN Welcome</strong> Dashboard</h1>
 
@@ -44,6 +46,7 @@
         </div>
 
         @vite(['resources/js/admin.js'])
+        @stack('scripts')
     </div>
 </body>
 
