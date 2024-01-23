@@ -36,6 +36,10 @@
                 </div>
             </main>
 
+            <form id="logout-admin-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+
             @include('layouts.partials.footer')
         </div>
 

@@ -16,16 +16,13 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class='dropdown-item' href='/pages-profile'>
                         <i class="align-middle me-1" data-feather="user"></i>
-                        Profile
+                        Hồ sơ
                     </a>
                     <div class="dropdown-divider"></div>
 
-                    <button class="dropdown-item" onclick="document.getElementById('logout-form').submit()">
-                        Log out
+                    <button class="dropdown-item" onclick="document.getElementById('logout-admin-form').submit()">
+                        Đăng xuất
                     </button>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </div>
             </li>
         </ul>

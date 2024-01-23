@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,15 +17,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+ * Client
+ */
 
 Auth::routes([
     'register' => false,
     'reset' => false,
 ]);
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+/*
+ * ADMIN
+ */
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('guest:admin')->group(function () {
+        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [LoginController::class, 'login'])->name('login');
+    });
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    });
 });
