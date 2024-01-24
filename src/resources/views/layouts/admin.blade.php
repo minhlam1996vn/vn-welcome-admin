@@ -27,18 +27,18 @@
         <div class="main">
             @include('layouts.partials.admin.header')
 
-            <main class="content">
+            <main class="content p-xl-4">
                 <x-alert />
 
                 <div class="container-fluid p-0">
-                    <div class="row mb-2 mb-xl-3">
+                    <div class="row mt-3 mb-4">
                         <div class="col-auto d-none d-sm-block">
                             <h3>
                                 @yield('page-title')
                             </h3>
                         </div>
 
-                        <div class="col-auto ms-auto text-end mt-n1">
+                        <div class="col-auto ms-auto mt-n1">
                             @yield('page-button')
                         </div>
                     </div>

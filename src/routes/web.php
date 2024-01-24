@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +43,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+        Route::resource('/category', CategoryController::class);
+
+        Route::resource('/article', ArticleController::class);
+
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
