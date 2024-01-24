@@ -42,10 +42,10 @@ class LoginController extends Controller
                 return redirect($this->redirectTo);
             }
 
-            return back()->with('msg', 'Email hoặc mật khẩu không hợp lệ');
+            return back()->with('error', 'Email hoặc mật khẩu không hợp lệ');
         }
 
-        return back()->with('msg', 'Tài khoản chưa được kích hoạt');
+        return back()->with('error', 'Tài khoản chưa được kích hoạt');
     }
 
     /**

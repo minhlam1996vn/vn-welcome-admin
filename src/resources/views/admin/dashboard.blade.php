@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 
+@section('page-title', 'Tổng quan')
+
+@section('page-button')
+    <a href="#" class="btn btn-primary">Thêm mới</a>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">

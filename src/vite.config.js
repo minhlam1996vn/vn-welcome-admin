@@ -7,7 +7,7 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
-                'resources/css/admin.css', // https://demo-basic.adminkit.io/
+                'resources/css/admin.css', // https://demo.adminkit.io
                 'resources/js/admin.js',
             ],
             refresh: true,
