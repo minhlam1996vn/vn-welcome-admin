@@ -32,7 +32,7 @@
 
                 <div class="container-fluid p-0">
                     <div class="row mt-3 mb-4">
-                        <div class="col-auto d-none d-sm-block">
+                        <div class="col-auto">
                             <h3>
                                 @yield('page-title')
                             </h3>
