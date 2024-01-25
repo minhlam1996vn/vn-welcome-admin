@@ -16,7 +16,7 @@
     <link href="https://demo.adminkit.io/css/light.css" rel="stylesheet">
 
     <!-- Styles -->
-    @vite(['resources/css/admin.css'])
+    @vite(['resources/css/admin.css', 'resources/css/custom.css'])
     @stack('styles')
 </head>
 
