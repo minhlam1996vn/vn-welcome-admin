@@ -27,9 +27,7 @@
 
                         <div class="mb-3">
                             <div id="toolbar-container" class="shadow rounded"></div>
-                            <div id="editor">
-                                <p>This is some sample content.</p>
-                            </div>
+                            <div id="editor"></div>
                         </div>
                     </div>
                 </div>
