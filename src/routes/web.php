@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::middleware('auth:admin')->group(function () {
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::resource('/category', CategoryController::class);
@@ -50,6 +53,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
-        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+        Route::post('/upload', [MediaController::class, 'upload'])->name('upload');
     });
 });

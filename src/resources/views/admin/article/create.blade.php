@@ -73,6 +73,10 @@
         DecoupledEditor
             .create(document.querySelector('#editor'), {
                 language: 'vi',
+                placeholder: 'Nhập nội dung chi tiết!',
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.upload', ['_token' => csrf_token()]) }}",
+                },
                 fontFamily: {
                     options: [
                         'default',
@@ -125,7 +129,7 @@
                         }
                     ]
                 },
-                placeholder: 'Nhập nội dung chi tiết!',
+
             })
             .then(editor => {
                 const toolbarContainer = document.querySelector('#toolbar-container');
