@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div class="card shadow-lg radius-10">
+    <div class="card shadow-lg">
         <div class="card-body">
             <form method="GET">
                 <div class="d-flex align-items-end" style="gap: 10px">
@@ -34,7 +34,7 @@
         <x-pagination :show-limit="true" />
     </div>
 
-    <div class="card shadow-lg radius-10" style="border-top: 5px solid #3b7ddd">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd">
         <div class="card-body">
             <table class="table table-responsive table-striped" style="width:100%">
                 <thead>
