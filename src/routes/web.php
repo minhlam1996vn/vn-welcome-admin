@@ -53,6 +53,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
-        Route::post('/upload', [MediaController::class, 'upload'])->name('upload');
+        Route::post('/media', [MediaController::class, 'upload'])->name('media.upload');
     });
 });

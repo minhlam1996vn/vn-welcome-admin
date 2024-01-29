@@ -27,7 +27,7 @@
 
                         <div class="mb-3">
                             <div id="toolbar-container" class="shadow rounded"></div>
-                            <div id="editor"></div>
+                            <div id="editor-article"></div>
                         </div>
                     </div>
                 </div>
@@ -71,11 +71,11 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
     <script>
         DecoupledEditor
-            .create(document.querySelector('#editor'), {
+            .create(document.querySelector('#editor-article'), {
                 language: 'vi',
                 placeholder: 'Nhập nội dung chi tiết!',
                 ckfinder: {
-                    uploadUrl: "{{ route('admin.upload', ['_token' => csrf_token()]) }}",
+                    uploadUrl: "{{ route('admin.media.upload', ['_token' => csrf_token()]) }}",
                 },
                 fontFamily: {
                     options: [
