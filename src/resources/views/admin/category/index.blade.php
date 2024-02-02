@@ -30,38 +30,48 @@
         </div>
     </div>
 
-    <div class="my-4">
-        <x-pagination :show-limit="true" />
-    </div>
+    {{-- <div class="my-4">
+        <x-pagination :links="$categories->links()" :show-limit="true" />
+    </div> --}}
 
     <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd">
-        <div class="card-body">
-            <table class="table table-responsive table-striped" style="width:100%">
+        <div class="card-body min-vh-50">
+            <table class="table table-responsive table-striped w-100">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
                         <th class="d-none d-md-table-cell">Company</th>
-                        <th class="d-none d-md-table-cell">Email</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 1; $i <= 10; $i++)
+                    @forelse ($categories as $key => $category)
                         <tr>
                             <td>
-                                {{ $i }}
+                                {{ ++$key }}
                             </td>
-                            <td>Garrett Winters</td>
-                            <td class="d-none d-md-table-cell">Good Guys</td>
-                            <td class="d-none d-md-table-cell">garrett@winters.com</td>
-                            <td><span class="badge bg-success">Active</span></td>
+                            <td>
+                                {{ $category->category_name }}
+                            </td>
+                            <td>
+                                {{ $category->category_slug }}
+                            </td>
+                            <td>
+                                <span class="badge bg-success">Active</span>
+                            </td>
                         </tr>
-                    @endfor
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                Không có dữ liệu hiển thị
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 
-    <x-pagination />
+    {{-- <x-pagination :links="$categories->links()" :show-limit="false" /> --}}
 @endsection

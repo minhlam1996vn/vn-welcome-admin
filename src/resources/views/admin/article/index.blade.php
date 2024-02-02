@@ -15,9 +15,9 @@
             <form method="GET">
                 <div class="d-flex align-items-end" style="gap: 10px">
                     <div class="d-flex align-items-center">
-                        <label class="me-2">Danh mục</label>
+                        <label class="me-2">Bài viết</label>
                         <div>
-                            <input type="text" name="category_name" class="form-control" placeholder="Nhập tên danh mục">
+                            <input type="text" name="title" class="form-control" placeholder="Nhập tên bài viết">
                         </div>
                     </div>
                     <div>
@@ -31,37 +31,47 @@
     </div>
 
     <div class="my-4">
-        <x-pagination :show-limit="true" />
+        <x-pagination :links="$articles->onEachSide(0)->links()" :show-limit="true" />
     </div>
 
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd">
-        <div class="card-body">
-            <table class="table table-responsive table-striped" style="width:100%">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto;">
+        <div class="card-body min-vh-50">
+            <table class="table table-responsive table-striped w-100">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
                         <th class="d-none d-md-table-cell">Company</th>
-                        <th class="d-none d-md-table-cell">Email</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 1; $i <= 10; $i++)
+                    @forelse ($articles as $key => $article)
                         <tr>
                             <td>
-                                {{ $i }}
+                                {{ ++$key }}
                             </td>
-                            <td>Garrett Winters</td>
-                            <td class="d-none d-md-table-cell">Good Guys</td>
-                            <td class="d-none d-md-table-cell">garrett@winters.com</td>
-                            <td><span class="badge bg-success">Active</span></td>
+                            <td>
+                                {{ $article->title }}
+                            </td>
+                            <td>
+                                {{ $article->slug }}
+                            </td>
+                            <td>
+                                <span class="badge bg-success">Active</span>
+                            </td>
                         </tr>
-                    @endfor
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                Không có dữ liệu hiển thị
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 
-    <x-pagination />
+    <x-pagination :links="$articles->links()" :show-limit="false" />
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -12,7 +13,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('admin.article.index');
+        $articles = Article::orderByDesc('id')->paginate(10);
+
+        return view('admin.article.index', compact('articles'));
     }
 
     /**

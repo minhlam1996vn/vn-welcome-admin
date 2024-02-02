@@ -1,23 +1,6 @@
 <div class="text-center position-relative">
     <div class="d-inline-block">
-        <ul class="pagination flex-wrap mb-0">
-            <li class="paginate_button page-item active">
-                <a href="#" aria-controls="datatables-reponsive" aria-role="link" aria-current="page" data-dt-idx="0"
-                    tabindex="0" class="page-link">
-                    <- </a>
-            </li>
-            <li class="paginate_button page-item active"><a href="#" aria-controls="datatables-reponsive"
-                    aria-role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a>
-            </li>
-            <li class="paginate_button page-item "><a href="?page=1" aria-controls="datatables-reponsive"
-                    aria-role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a></li>
-            <li class="paginate_button page-item active">
-                <a href="#" aria-controls="datatables-reponsive" aria-role="link" aria-current="page"
-                    data-dt-idx="0" tabindex="0" class="page-link">
-                    ->
-                </a>
-            </li>
-        </ul>
+        {!! $links !!}
     </div>
 
     @if ($showLimit)

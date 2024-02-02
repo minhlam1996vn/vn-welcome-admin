@@ -8,12 +8,15 @@ use Illuminate\View\Component;
 
 class Pagination extends Component
 {
+    public $links;
     public $showLimit;
+
     /**
      * Create a new component instance.
      */
-    public function __construct($showLimit = false)
+    public function __construct($links, $showLimit)
     {
+        $this->links = $links;
         $this->showLimit = $showLimit;
     }
 
