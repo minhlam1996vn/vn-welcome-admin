@@ -4,9 +4,20 @@
     </div>
 
     @if ($showLimit)
+        @php
+            $queryString = request()->getQueryString();
+            parse_str($queryString, $queryParams);
+            unset($queryParams['limit']);
+            unset($queryParams['page']);
+            $queryParams = array_filter($queryParams, function ($value) {
+                return $value !== null && $value !== '';
+            });
+            $newQueryString = http_build_query($queryParams);
+        @endphp
         <div class="position-absolute top-0 end-0 d-none d-sm-block">
             <div class="input-group">
-                <select name="limit" class="form-select" onchange="window.location.href = `?limit=${this.value}`">
+                <select name="limit" class="form-select"
+                    onchange="window.location.href = `?limit=${this.value}{{ $newQueryString ? '&' . $newQueryString : '' }}`">
                     <option value="">Hiển thị</option>
                     <option value="10" {{ request()->limit === '10' ? 'selected="selected"' : '' }}>10</option>
                     <option value="20" {{ request()->limit === '20' ? 'selected="selected"' : '' }}>20</option>

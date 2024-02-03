@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -13,9 +14,16 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderByDesc('id')->paginate(10);
+        $categories = Category::all();
 
-        return view('admin.article.index', compact('articles'));
+        $limit = 10;
+        if (request()->limit) {
+            $limit = request()->limit;
+        }
+
+        $articles = Article::orderByDesc('id')->paginate($limit)->withQueryString();
+
+        return view('admin.article.index', compact('categories', 'articles'));
     }
 
     /**

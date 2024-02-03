@@ -11,23 +11,39 @@
 
 @section('content')
     <div class="card shadow-lg">
-        <div class="card-body">
-            <form method="GET">
-                <div class="d-flex align-items-end" style="gap: 10px">
-                    <div class="d-flex align-items-center">
-                        <label class="me-2">Bài viết</label>
-                        <div>
-                            <input type="text" name="title" class="form-control" placeholder="Nhập tên bài viết">
+        <form method="GET" action="">
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-12 col-md-5">
+                        <div class="mb-3 d-flex align-items-center">
+                            <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
+                            <div class="w-100">
+                                <select name="category" id="search-category" class="form-select">
+                                    <option value="">Chọn danh mục</option>
+                                    <option value="">Abc</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary border shadow" type="submit">
-                            Tìm kiếm
-                        </button>
+                    <div class="col-12 col-md-5">
+                        <div class="mb-3 d-flex align-items-center">
+                            <label style="width: 100px" for="search-article" class="me-2">Bài viết</label>
+                            <div class="w-100">
+                                <input type="text" name="article" id="search-article" class="form-control"
+                                    placeholder="Nhập tên bài viết">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="mb-3 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary border shadow">
+                                Tìm kiếm
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
     <div class="my-4">
