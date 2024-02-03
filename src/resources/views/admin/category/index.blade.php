@@ -11,30 +11,36 @@
 
 @section('content')
     <div class="card shadow-lg">
-        <div class="card-body">
-            <form method="GET">
-                <div class="d-flex align-items-end" style="gap: 10px">
-                    <div class="d-flex align-items-center">
-                        <label class="me-2">Danh mục</label>
-                        <div>
-                            <input type="text" name="category_name" class="form-control" placeholder="Nhập tên danh mục">
+        <form method="GET" action="">
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-12 col-md-5">
+                        <div class="mb-3 d-flex align-items-center">
+                            <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
+                            <div class="w-100">
+                                <input type="text" name="category_name" value="{{ request()->category_name }}"
+                                    id="search-category" class="form-control" placeholder="Nhập tên danh mục">
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary border shadow" type="submit">
-                            Tìm kiếm
-                        </button>
+                    <div class="col-12 col-md-5"></div>
+                    <div class="col-12 col-md-2">
+                        <div class="mb-3 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary border shadow">
+                                Tìm kiếm
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 
-    {{-- <div class="my-4">
-        <x-pagination :links="$categories->links()" :show-limit="true" />
-    </div> --}}
+    <div class="my-4">
+        <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="true" />
+    </div>
 
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto">
         <div class="card-body min-vh-50">
             <table class="table table-responsive table-striped w-100">
                 <thead>
@@ -73,5 +79,5 @@
         </div>
     </div>
 
-    {{-- <x-pagination :links="$categories->links()" :show-limit="false" /> --}}
+    <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="false" />
 @endsection

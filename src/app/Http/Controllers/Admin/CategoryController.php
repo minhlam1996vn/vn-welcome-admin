@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(10);
+        $limit = request()->limit ?? 20;
+        $categories = Category::paginate($limit);
 
         return view('admin.category.index', compact('categories'));
     }

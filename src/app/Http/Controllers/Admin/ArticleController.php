@@ -14,13 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        $limit = request()->limit ?? 20;
         $categories = Category::all();
-
-        $limit = 10;
-        if (request()->limit) {
-            $limit = request()->limit;
-        }
-
         $articles = Article::orderByDesc('id')->paginate($limit)->withQueryString();
 
         return view('admin.article.index', compact('categories', 'articles'));

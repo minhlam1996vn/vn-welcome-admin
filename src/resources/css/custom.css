@@ -9,6 +9,8 @@ ul.pagination {
 
 ul.pagination {
     margin-bottom: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 ul.pagination > li > a,

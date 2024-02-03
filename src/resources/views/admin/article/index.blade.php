@@ -19,8 +19,13 @@
                             <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
                             <div class="w-100">
                                 <select name="category" id="search-category" class="form-select">
-                                    <option value="">Chọn danh mục</option>
-                                    <option value="">Abc</option>
+                                    <option value="">Không chọn</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ request()->category == $category->id ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -29,8 +34,8 @@
                         <div class="mb-3 d-flex align-items-center">
                             <label style="width: 100px" for="search-article" class="me-2">Bài viết</label>
                             <div class="w-100">
-                                <input type="text" name="article" id="search-article" class="form-control"
-                                    placeholder="Nhập tên bài viết">
+                                <input type="text" name="article" value="{{ request()->article }}" id="search-article"
+                                    class="form-control" placeholder="Nhập tên bài viết">
                             </div>
                         </div>
                     </div>
@@ -50,7 +55,7 @@
         <x-pagination :links="$articles->onEachSide(0)->links()" :show-limit="true" />
     </div>
 
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto;">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto">
         <div class="card-body min-vh-50">
             <table class="table table-responsive table-striped w-100">
                 <thead>
@@ -89,5 +94,5 @@
         </div>
     </div>
 
-    <x-pagination :links="$articles->links()" :show-limit="false" />
+    <x-pagination :links="$articles->onEachSide(0)->links()" :show-limit="false" />
 @endsection
