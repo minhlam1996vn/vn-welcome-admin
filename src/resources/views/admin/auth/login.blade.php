@@ -33,8 +33,7 @@
                     </div>
                     <div>
                         <div class="form-check align-items-center">
-                            <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me"
-                                name="remember-me" disabled>
+                            <input class="form-check-input" type="checkbox" name="remember" id="customControlInline">
                             <label class="form-check-label text-small" for="customControlInline">Ghi nhớ đăng nhập</label>
                         </div>
                     </div>
