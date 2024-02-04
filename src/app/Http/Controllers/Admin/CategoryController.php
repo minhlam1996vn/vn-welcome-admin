@@ -2,21 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\Admin\CategoryService;
 
 class CategoryController extends Controller
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $limit = request()->limit ?? 20;
-        $categories = Category::paginate($limit);
+        $params = $request->all();
+        $categories = $this->categoryService->getCategories($params);
 
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index', compact('params', 'categories'));
     }
 
     /**

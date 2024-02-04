@@ -2,30 +2,36 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\Admin\ArticleService;
+use App\Services\Admin\CategoryService;
 
 class ArticleController extends Controller
 {
+    protected $articleService;
+    protected $categoryService;
+
+    public function __construct(
+        ArticleService $articleService,
+        CategoryService $categoryService
+    ) {
+        $this->articleService = $articleService;
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $limit = request()->limit ?? 20;
-        $categories = Category::all();
+        $params = $request->all();
+        $categories = $this->categoryService->getAllCategories();
+        $articles = $this->articleService->getArticles($params);
 
-        $articles = Article::query();
-
-        if (request()->category) {
-            $articles = $articles->where('category_id', request()->category);
-        }
-
-        $articles = $articles->orderByDesc('id')->paginate($limit)->withQueryString();
-
-        return view('admin.article.index', compact('categories', 'articles'));
+        return view('admin.article.index', compact('params', 'categories', 'articles'));
     }
 
     /**

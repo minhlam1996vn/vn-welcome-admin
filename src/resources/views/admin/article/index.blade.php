@@ -18,11 +18,11 @@
                         <div class="mb-3 d-flex align-items-center">
                             <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
                             <div class="w-100">
-                                <select name="category" id="search-category" class="form-select">
-                                    <option value="">Không chọn</option>
+                                <select name="category_id" id="search-category" class="form-select">
+                                    <option value="">Chọn danh mục tìm kiếm</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            {{ request()->category == $category->id ? 'selected' : '' }}>
+                                            {{ ($params['category_id'] ?? null) == $category->id ? 'selected' : '' }}>
                                             {{ $category->category_name }}
                                         </option>
                                     @endforeach
@@ -34,8 +34,8 @@
                         <div class="mb-3 d-flex align-items-center">
                             <label style="width: 100px" for="search-article" class="me-2">Bài viết</label>
                             <div class="w-100">
-                                <input type="text" name="article" value="{{ request()->article }}" id="search-article"
-                                    class="form-control" placeholder="Nhập tên bài viết">
+                                <input type="text" name="article_title" value="{{ $params['article_title'] ?? null }}"
+                                    id="search-article" class="form-control" placeholder="Nhập tên bài viết tìm kiếm">
                             </div>
                         </div>
                     </div>
