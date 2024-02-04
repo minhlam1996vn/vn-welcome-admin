@@ -14,9 +14,9 @@
                         alt="Charles Hall" />
                 </div>
                 <div class="flex-grow-1 ps-2">
-                    <a class="sidebar-user-title" href="#">
+                    <span class="sidebar-user-title">
                         Minh Lâm
-                    </a>
+                    </span>
                     <div class="sidebar-user-subtitle">Admin</div>
                 </div>
             </div>

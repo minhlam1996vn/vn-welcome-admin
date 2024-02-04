@@ -60,9 +60,9 @@
             <table class="table table-responsive table-striped w-100">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th class="d-none d-md-table-cell">Company</th>
+                        <th class="text-center">#</th>
+                        <th>Tên bài viết</th>
+                        <th class="d-none d-md-table-cell">Mô tả</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -70,13 +70,17 @@
                     @forelse ($articles as $key => $article)
                         <tr>
                             <td>
-                                {{ ++$key }}
+                                <div style="width: 50px">
+                                    <img class="img-thumbnail" src="{{ $article->image_url }}" alt="{{ $article->title }}">
+                                </div>
                             </td>
                             <td>
-                                {{ $article->title }}
+                                <a href="#!">
+                                    {{ Str::limit($article->title, 50, '...') }}
+                                </a>
                             </td>
                             <td>
-                                {{ $article->slug }}
+                                {{ Str::limit($article->content, 100, '...') }}
                             </td>
                             <td>
                                 <span class="badge bg-success">Active</span>

@@ -7,13 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="VNWelcome">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="https://demo.adminkit.io/img/icons/icon-48x48.png" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>VN Welcome - Admin</title>
 
+    <link rel="shortcut icon" href="https://demo.adminkit.io/img/icons/icon-48x48.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://demo.adminkit.io/css/light.css" rel="stylesheet">
 
     <!-- Styles -->
     @vite(['resources/css/admin.css', 'resources/css/custom.css'])
