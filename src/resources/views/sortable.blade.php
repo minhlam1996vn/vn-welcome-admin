@@ -8,21 +8,30 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 
+<style>
+    .list-group-item:hover {
+        background-color: rgba(0, 0, 0, 0.1)
+    }
+</style>
+
 <body>
     <div class="container mt-5">
-        <div id="demo" class="mb-3">
+        <div id="demo" class="mb-2">
             <div id="list-sort" class="list-group col">
-                <div data-id="1" class="list-group-item nested-1">Item 1</div>
-                <div data-id="2" class="list-group-item nested-1">Item 2</div>
-                <div data-id="3" class="list-group-item nested-1">Item 3</div>
-                <div data-id="4" class="list-group-item nested-1">Item 4</div>
-                <div data-id="5" class="list-group-item nested-1">Item 5</div>
-                <div data-id="6" class="list-group-item nested-2">Item 6
-                    <div class="list-group" id="list-sort-6">
-                        <div data-id="7" class="d-none list-group-item nested-3">Item 3.1</div>
-                        <div data-id="8" class="list-group-item nested-3">Item 3.2</div>
-                        <div data-id="9" class="list-group-item nested-3">Item 3.3</div>
-                        <div data-id="10" class="list-group-item nested-3">Item 3.4</div>
+                <div data-id="1" class="list-group-item nested-1 rounded shadow mb-2">Item 1</div>
+                <div data-id="2" class="list-group-item nested-1 rounded shadow mb-2">Item 2</div>
+                <div data-id="3" class="list-group-item nested-1 rounded shadow mb-2">Item 3</div>
+                <div data-id="4" class="list-group-item nested-1 rounded shadow mb-2">Item 4</div>
+                <div data-id="5" class="list-group-item nested-1 rounded shadow mb-2">Item 5</div>
+                <div data-id="6" class="list-group-item nested-2 rounded shadow mb-2">
+                    <div class="mb-2">
+                        Item 6
+                    </div>
+                    <div class="list-group px-2" id="list-sort-6">
+                        <div data-id="7" class="d-none list-group-item nested-3 rounded shadow mb-2">Item 3.1</div>
+                        <div data-id="8" class="list-group-item nested-3 rounded shadow mb-2">Item 3.2</div>
+                        <div data-id="9" class="list-group-item nested-3 rounded shadow mb-2">Item 3.3</div>
+                        <div data-id="10" class="list-group-item nested-3 rounded shadow mb-2">Item 3.4</div>
                     </div>
                 </div>
             </div>
