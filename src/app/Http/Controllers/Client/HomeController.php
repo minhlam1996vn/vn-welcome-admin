@@ -14,6 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('client.home');
+        return view('sortable');
+        // return view('client.home');
     }
 }
