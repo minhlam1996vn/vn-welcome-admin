@@ -55,7 +55,7 @@
         <x-pagination :links="$articles->onEachSide(0)->links()" :show-limit="true" />
     </div>
 
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 60vh; overflow: auto">
         <div class="card-body min-vh-50">
             <table class="table table-responsive table-striped w-100">
                 <thead>
@@ -71,16 +71,17 @@
                         <tr>
                             <td>
                                 <div style="width: 50px">
-                                    <img class="img-thumbnail" src="{{ $article->image_url }}" alt="{{ $article->title }}">
+                                    <img class="img-thumbnail" src="{{ $article->article_thumbnail }}"
+                                        alt="{{ $article->article_title }}">
                                 </div>
                             </td>
                             <td>
                                 <a href="#!">
-                                    {{ Str::limit($article->title, 50, '...') }}
+                                    {{ Str::limit($article->article_title, 50, '...') }}
                                 </a>
                             </td>
                             <td>
-                                {{ Str::limit($article->content, 100, '...') }}
+                                {{ Str::limit($article->article_content, 100, '...') }}
                             </td>
                             <td>
                                 <span class="badge bg-success">Active</span>

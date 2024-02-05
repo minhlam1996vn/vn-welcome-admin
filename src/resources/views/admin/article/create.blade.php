@@ -36,7 +36,7 @@
             <div class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-header pb-0">
-                        <h5 class="card-title mb-0">Cài đặt Media</h5>
+                        <h5 class="card-title mb-0">Cài đặt bổ sung</h5>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">

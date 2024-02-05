@@ -21,7 +21,7 @@ class ArticleService extends BaseService
                 $query->where('category_id', $params['category_id']);
             })
             ->when(isset($params['article_title']), function ($query) use ($params) {
-                $query->where('title', 'like', '%' . $params['article_title'] . '%');
+                $query->where('article_title', 'like', '%' . $params['article_title'] . '%');
             })
             ->paginate($limit)
             ->withQueryString();

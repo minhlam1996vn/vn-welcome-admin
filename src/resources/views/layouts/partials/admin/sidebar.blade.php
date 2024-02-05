@@ -86,9 +86,10 @@
                 </div>
 
                 <div class="d-grid">
-                    <a href="#!" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary"
+                        onclick="alert('Chức năng chưa được mở. Vui lòng quay lại sau!')">
                         Tải xuống
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

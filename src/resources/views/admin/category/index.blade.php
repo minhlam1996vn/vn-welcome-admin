@@ -40,7 +40,7 @@
         <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="true" />
     </div>
 
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 50vh; overflow: auto">
+    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 60vh; overflow: auto">
         <div class="card-body min-vh-50">
             <table class="table table-responsive table-striped w-100">
                 <thead>
