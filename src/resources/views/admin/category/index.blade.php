@@ -2,6 +2,14 @@
 
 @section('page-title', 'Quản lý danh mục')
 
+@push('styles')
+    <style>
+        .list-group-item:hover {
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+    </style>
+@endpush
+
 @section('page-button')
     <a href="{{ route('admin.category.create') }}" class="btn btn-primary float-end mt-n1">
         <i class="align-middle" data-feather="plus"></i>
@@ -10,7 +18,122 @@
 @endsection
 
 @section('content')
-    <div class="card shadow-lg">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5 class="card-title mb-0">Sắp xếp danh mục</h5>
+                </div>
+                <div class="card-body">
+                    <div id="demo" class="mb-2">
+                        <div id="list-sort" class="list-group col">
+                            <div data-id="1" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="ms-1">Con người Việt Nam</div>
+                                    <div>
+                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-id="2" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="ms-1">Ngày lễ và những trải nghiệm</div>
+                                    <div>
+                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-id="3" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="ms-1">Tin tức thị trường</div>
+                                    <div>
+                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-id="4" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="ms-1">63 Tỉnh thành</div>
+                                    <div>
+                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-id="5" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="ms-1">Ẩm thực - Du lịch</div>
+                                    <div>
+                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-id="6" class="list-group-item nested-2 border rounded shadow-lg mb-2 p-2">
+                                <div class="mb-3">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="ms-1">Blog khoa học công nghệ</div>
+                                        <div>
+                                            <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                            <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group px-2" id="list-sort-6">
+                                    <div data-id="7"
+                                        class="d-none list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="ms-1">Blog tin tức</div>
+                                            <div>
+                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-id="8" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="ms-1">Blog công nghệ</div>
+                                            <div>
+                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-id="9" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="ms-1">Blog khoa học</div>
+                                            <div>
+                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-id="10" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="ms-1">Blog tổng hợp</div>
+                                            <div>
+                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
+                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button id="get-order" class="btn btn-primary">Lưu sắp xếp</button>
+    </div>
+
+    {{-- <div class="card shadow-lg">
         <form method="GET" action="">
             <div class="card-body pb-0">
                 <div class="row">
@@ -79,5 +202,63 @@
         </div>
     </div>
 
-    <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="false" />
+    <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="false" /> --}}
 @endsection
+
+@push('scripts')
+    <script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script>
+        // List 1
+        $('#list-sort').sortable({
+            group: {
+                name: 'list',
+                pull: 'clone',
+                put: false,
+            },
+            animation: 200,
+            onSort: reportActivity,
+        });
+
+        // List 2 (nested)
+        $('#list-sort-6').sortable({
+            group: {
+                name: 'list',
+                pull: 'clone',
+                put: false,
+            },
+            animation: 200,
+            onSort: reportActivity,
+        });
+
+        // Arrays of "data-id"
+        $('#get-order').click(function() {
+            // const sortValue = $('#list-sort').sortable('toArray');
+            // console.log(sortValue);
+            const sortValue = getNestedSortOrder('#list-sort');
+            console.log(sortValue);
+        });
+
+        // Report when the sort order has changed
+        function reportActivity() {
+            console.log('The sort order has changed');
+        };
+
+        // get nested sort order
+        function getNestedSortOrder(selector) {
+            const result = [];
+
+            $(selector).find('> .list-group-item').each(function() {
+                const item = {
+                    id: $(this).data('id'),
+                    children: getNestedSortOrder($(this).find('.list-group'))
+                };
+
+                result.push(item);
+            });
+
+            return result;
+        }
+    </script>
+@endpush
