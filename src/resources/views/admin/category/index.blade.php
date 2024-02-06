@@ -25,9 +25,29 @@
                     <h5 class="card-title mb-0">Sắp xếp danh mục</h5>
                 </div>
                 <div class="card-body">
-                    <div id="demo" class="mb-2">
-                        <div id="list-sort" class="list-group col">
-                            <div data-id="1" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                    <div class="mb-2">
+                        <div id="list-category" class="list-group col">
+                            @forelse ($categories as $category)
+                                <div data-id="{{ $category->id }}"
+                                    class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="ms-1">
+                                            <span class="text-info cursor-pointer">
+                                                {{ $category->category_name }} ({{ $category->id }})
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('admin.category.create') }}"
+                                                class="btn btn-sm btn-success rounded">Sửa</a>
+                                            <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center text-muted">Không có dữ liệu hiển thị</div>
+                            @endforelse
+
+                            {{-- <div data-id="1" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="ms-1">Con người Việt Nam</div>
                                     <div>
@@ -121,7 +141,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -130,7 +150,11 @@
     </div>
 
     <div class="text-center">
-        <button id="get-order" class="btn btn-primary">Lưu sắp xếp</button>
+        <form method="POST" action="{{ route('admin.category.updateSortCategories') }}">
+            @csrf
+            <textarea id="sort-value" class="d-none" name="sort_value"></textarea>
+            <button id="get-order" class="btn btn-primary">Lưu thay đổi</button>
+        </form>
     </div>
 
     {{-- <div class="card shadow-lg">
@@ -210,8 +234,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     <script>
-        // List 1
-        $('#list-sort').sortable({
+        // List category sortable
+        $('#list-category').sortable({
             group: {
                 name: 'list',
                 pull: 'clone',
@@ -221,7 +245,7 @@
             onSort: reportActivity,
         });
 
-        // List 2 (nested)
+        // List child category sortable
         $('#list-sort-6').sortable({
             group: {
                 name: 'list',
@@ -232,18 +256,19 @@
             onSort: reportActivity,
         });
 
-        // Arrays of "data-id"
-        $('#get-order').click(function() {
-            // const sortValue = $('#list-sort').sortable('toArray');
-            // console.log(sortValue);
-            const sortValue = getNestedSortOrder('#list-sort');
-            console.log(sortValue);
-        });
-
         // Report when the sort order has changed
         function reportActivity() {
-            console.log('The sort order has changed');
+            return
         };
+
+        // Arrays of "data-id"
+        $('#get-order').click(function() {
+            const sortValue = getNestedSortOrder('#list-category');
+            $('#sort-value').val(JSON.stringify(sortValue));
+
+            // const sortValue = $('#list-category').sortable('toArray');
+            // console.log(sortValue);
+        });
 
         // get nested sort order
         function getNestedSortOrder(selector) {

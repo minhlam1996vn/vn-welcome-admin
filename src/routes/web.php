@@ -48,6 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::resource('/category', CategoryController::class);
+        Route::post('/category/update-sort-categories', [CategoryController::class, 'updateSortCategories'])->name('category.updateSortCategories');
 
         Route::resource('/article', ArticleController::class);
 
