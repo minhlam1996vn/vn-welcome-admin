@@ -33,7 +33,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="ms-1">
                                             <span class="text-info cursor-pointer">
-                                                {{ $category->category_name }} ({{ $category->id }})
+                                                {{ $category->category_name }}
                                             </span>
                                         </div>
                                         <div>

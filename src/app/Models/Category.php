@@ -14,6 +14,7 @@ class Category extends Model
         'category_slug',
         'category_keywords',
         'category_description',
+        'category_order',
         'parent_id',
     ];
 

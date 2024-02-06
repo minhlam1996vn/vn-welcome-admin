@@ -19,13 +19,18 @@ class CategoryService extends BaseService
 
     public function getCategories($params)
     {
-        $limit = $params['limit'] ?? config('common.pagination.limit');
-
         return $this->model->query()
             ->when(isset($params['category_name']), function ($query) use ($params) {
                 $query->where('category_name', 'like', '%' . $params['category_name'] . '%');
             })
-            ->paginate($limit)
-            ->withQueryString();
+            ->orderBy('category_order')
+            ->get();
+    }
+
+    public function updateSortCategories($sortValue)
+    {
+        foreach ($sortValue as $sort => $value) {
+            $this->model->where('id', $value['id'])->update(['category_order' => $sort + 1]);
+        }
     }
 }

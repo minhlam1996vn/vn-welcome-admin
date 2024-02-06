@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('category_slug')->unique();
             $table->text('category_keywords')->nullable();
             $table->text('category_description')->nullable();
+            $table->integer('category_order')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

@@ -23,7 +23,6 @@ class CategoryController extends Controller
     {
         $params = $request->all();
         $categories = $this->categoryService->getCategories($params);
-        // dd($categories->toArray());
 
         return view('admin.category.index', compact('params', 'categories'));
     }
@@ -82,6 +81,8 @@ class CategoryController extends Controller
     public function updateSortCategories(Request $request)
     {
         $sortValue = json_decode($request->sort_value, true);
+
+        $this->categoryService->updateSortCategories($sortValue);
 
         return redirect()->back()->with('success', 'Sắp xếp danh mục thành công');
     }
