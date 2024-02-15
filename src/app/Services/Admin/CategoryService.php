@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Services\BaseService;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryService extends BaseService
 {
@@ -15,6 +16,17 @@ class CategoryService extends BaseService
     public function getCategory($categoryId)
     {
         return $this->model->findOrFail($categoryId);
+    }
+
+
+    public function updateCategory($categoryId, $inputs)
+    {
+        return $this->model->where('id', $categoryId)->update($inputs);
+    }
+
+    public function destroyCategory($categoryId)
+    {
+        return $this->model->destroy($categoryId);
     }
 
     public function getAllCategories()

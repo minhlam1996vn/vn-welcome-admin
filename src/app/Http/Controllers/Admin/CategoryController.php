@@ -48,9 +48,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        $category = $this->categoryService->getCategory($id);
-
-        return view('admin.category.update', compact('category'));
+        //
     }
 
     /**
@@ -58,7 +56,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = $this->categoryService->getCategory($id);
+        $categories = $this->categoryService->getAllCategories();
+
+        return view('admin.category.update', compact('category', 'categories'));
     }
 
     /**
@@ -66,7 +67,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $inputs = $request->except('_token', '_method');
+
+        if ($this->categoryService->updateCategory($id, $inputs)) {
+            return redirect()->back()->with('success', 'Cập nhật danh mục thành công');
+        }
+
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 
     /**
@@ -74,7 +81,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if ($this->categoryService->destroyCategory($id)) {
+            return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        }
+
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 
     /**

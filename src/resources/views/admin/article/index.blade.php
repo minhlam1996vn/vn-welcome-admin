@@ -19,7 +19,7 @@
                             <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
                             <div class="w-100">
                                 <select name="category_id" id="search-category" class="form-select">
-                                    <option value="">Chọn danh mục tìm kiếm</option>
+                                    <option value="">Tất cả danh mục</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ ($params['category_id'] ?? null) == $category->id ? 'selected' : '' }}>

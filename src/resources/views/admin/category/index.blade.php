@@ -21,9 +21,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header pb-0">
-                    <h5 class="card-title mb-0">Sắp xếp danh mục</h5>
-                </div>
                 <div class="card-body">
                     <div class="mb-2">
                         <div id="list-category" class="list-group col">
@@ -37,16 +34,26 @@
                                             </span>
                                         </div>
                                         <div>
-                                            <a href="{{ route('admin.category.update', $category->id) }}"
-                                                class="btn btn-sm btn-success rounded">Sửa</a>
-                                            <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
+                                            <a href="{{ route('admin.category.edit', $category->id) }}"
+                                                class="btn btn-sm btn-secondary rounded">
+                                                <i class="align-middle" data-feather="edit"></i>
+                                            </a>
+                                            @if ($category->articles->count() > 0)
+                                                <form action="{{ route('admin.category.destroy', $category->id) }}"
+                                                    method="POST"class="d-inline-block">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger rounded">
+                                                        <i class="align-middle" data-feather="trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             @empty
                                 <div class="text-center text-muted">Không có dữ liệu hiển thị</div>
                             @endforelse
-
                         </div>
                     </div>
                 </div>
