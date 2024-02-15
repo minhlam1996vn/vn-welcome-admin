@@ -25,14 +25,15 @@
                             <label class="form-label">Từ khóa danh mục</label>
                             <textarea name="category_keywords" class="form-control" rows="2">{{ $category->category_keywords }}</textarea>
                         </div>
-
                         @if ($category->parent_id)
                             <div class="mb-3">
                                 <label class="form-label">Danh mục cha</label>
                                 <select class="form-select" name="parent_id">
-                                    <option disabled selected>Chọn danh mục cha</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    @foreach ($categories as $categoryItem)
+                                        <option value="{{ $categoryItem->id }}"
+                                            {{ $category->parent_id === $categoryItem->id ? 'selected' : '' }}>
+                                            {{ $categoryItem->category_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

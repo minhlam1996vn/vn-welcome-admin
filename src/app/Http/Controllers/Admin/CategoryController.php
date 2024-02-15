@@ -23,8 +23,9 @@ class CategoryController extends Controller
     {
         $params = $request->all();
         $categories = $this->categoryService->getCategories($params);
+        $categoriesTree = getCategories($categories);
 
-        return view('admin.category.index', compact('params', 'categories'));
+        return view('admin.category.index', compact('params', 'categoriesTree'));
     }
 
     /**
@@ -32,7 +33,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $categories = $this->categoryService->getAllCategories();
+
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -40,7 +43,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->except('_token');
+
+        if ($this->categoryService->createCategory($inputs)) {
+            return redirect()->route('admin.category.index')->with('success', 'Thêm danh mục thành công');
+        }
+
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 
     /**
@@ -67,10 +76,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $inputs = $request->except('_token', '_method');
+        $categoryUpdate = [
+            'category_name' => $request->category_name,
+            'category_description' => $request->category_description,
+            'category_keywords' => $request->category_keywords,
+            'parent_id' => $request->parent_id ? (int) $request->parent_id : null,
+        ];
 
-        if ($this->categoryService->updateCategory($id, $inputs)) {
-            return redirect()->back()->with('success', 'Cập nhật danh mục thành công');
+        if ($this->categoryService->updateCategory($id, $categoryUpdate)) {
+            return redirect()->route('admin.category.index')->with('success', 'Cập nhật danh mục thành công');
         }
 
         return redirect()->back()->with('error', 'Có lỗi xảy ra');
@@ -93,9 +107,17 @@ class CategoryController extends Controller
      */
     public function updateSortCategories(Request $request)
     {
-        $sortValue = json_decode($request->sort_value, true);
+        $sortValueArray = json_decode($request->sort_value, true);
 
-        $this->categoryService->updateSortCategories($sortValue);
+        foreach ($sortValueArray as $sort => $categoryInfo) {
+            $this->categoryService->updateCategory($categoryInfo['id'], ['category_order' => $sort + 1]);
+
+            if ($categoryInfo['children']) {
+                foreach ($categoryInfo['children'] as $sort => $categoryChildrenInfo) {
+                    $this->categoryService->updateCategory($categoryChildrenInfo['id'], ['category_order' => $sort + 1]);
+                }
+            }
+        }
 
         return redirect()->back()->with('success', 'Sắp xếp danh mục thành công');
     }

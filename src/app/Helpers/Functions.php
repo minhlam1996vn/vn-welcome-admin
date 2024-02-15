@@ -17,3 +17,28 @@ function getQueryStringCustom()
 
     return http_build_query($queryParams);
 }
+
+function getCategories($categories, $parent_id = 0, $char = '')
+{
+    $result = [];
+
+    foreach ($categories as $key => $item) {
+        if ($item['parent_id'] == $parent_id) {
+            $category = [
+                'id' => $item['id'],
+                'category_name' => $item['category_name']
+                // 'category_name' => $char . $item['category_name']
+            ];
+
+            $childCategories = getCategories($categories, $item['id'], $char . '|---');
+            if (!empty($childCategories)) {
+                $category['children'] = $childCategories;
+            }
+
+            $result[] = $category;
+            unset($categories[$key]);
+        }
+    }
+
+    return $result;
+}

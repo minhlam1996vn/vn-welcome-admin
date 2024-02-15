@@ -24,32 +24,65 @@
                 <div class="card-body">
                     <div class="mb-2">
                         <div id="list-category" class="list-group col">
-                            @forelse ($categories as $category)
-                                <div data-id="{{ $category->id }}"
+                            @forelse ($categoriesTree as $category)
+                                <div data-id="{{ $category['id'] }}"
                                     class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="ms-1">
                                             <span class="text-info cursor-pointer">
-                                                {{ $category->category_name }}
+                                                {{ $category['category_name'] }}
                                             </span>
                                         </div>
                                         <div>
-                                            <a href="{{ route('admin.category.edit', $category->id) }}"
-                                                class="btn btn-sm btn-secondary rounded">
+                                            <a href="{{ route('admin.category.edit', $category['id']) }}"
+                                                class="btn btn-sm btn-info rounded">
                                                 <i class="align-middle" data-feather="edit"></i>
                                             </a>
-                                            @if ($category->articles->count() > 0)
-                                                <form action="{{ route('admin.category.destroy', $category->id) }}"
-                                                    method="POST"class="d-inline-block">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger rounded">
-                                                        <i class="align-middle" data-feather="trash"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
+                                            {{-- @if ($category->articles->count() === 0) --}}
+                                            <form action="{{ route('admin.category.destroy', $category['id']) }}"
+                                                method="POST"class="d-inline-block">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger rounded">
+                                                    <i class="align-middle" data-feather="trash"></i>
+                                                </button>
+                                            </form>
+                                            {{-- @endif --}}
                                         </div>
                                     </div>
+
+                                    @if (isset($category['children']))
+                                        <div class="list-group px-2 mt-2" id="list-sort-{{ $category['id'] }}">
+                                            @foreach ($category['children'] as $categoryChildren)
+                                                <div data-id="{{ $categoryChildren['id'] }}"
+                                                    class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="ms-1">
+                                                            <span class="text-secondary cursor-pointer">
+                                                                {{ $categoryChildren['category_name'] }}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <a href="{{ route('admin.category.edit', $categoryChildren['id']) }}"
+                                                                class="btn btn-sm btn-secondary rounded">
+                                                                <i class="align-middle" data-feather="edit"></i>
+                                                            </a>
+                                                            <form
+                                                                action="{{ route('admin.category.destroy', $categoryChildren['id']) }}"
+                                                                method="POST"class="d-inline-block">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-danger rounded">
+                                                                    <i class="align-middle" data-feather="trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             @empty
                                 <div class="text-center text-muted">Không có dữ liệu hiển thị</div>
@@ -87,15 +120,20 @@
         });
 
         // List child category sortable
-        $('#list-sort-6').sortable({
-            group: {
-                name: 'list',
-                pull: 'clone',
-                put: false,
-            },
-            animation: 200,
-            onSort: reportActivity,
-        });
+        const categoriesId = '{{ collect($categoriesTree)->pluck('id') }}'
+        const parseCategoriesId = JSON.parse(categoriesId);
+
+        for (let i = 0; i < parseCategoriesId.length; i++) {
+            $('#list-sort-' + parseCategoriesId[i]).sortable({
+                group: {
+                    name: 'list',
+                    pull: 'clone',
+                    put: false,
+                },
+                animation: 200,
+                onSort: reportActivity,
+            });
+        }
 
         // Report when the sort order has changed
         function reportActivity() {

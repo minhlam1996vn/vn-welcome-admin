@@ -4,7 +4,7 @@ namespace App\Services\Admin;
 
 use App\Services\BaseService;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryService extends BaseService
 {
@@ -18,10 +18,16 @@ class CategoryService extends BaseService
         return $this->model->findOrFail($categoryId);
     }
 
-
-    public function updateCategory($categoryId, $inputs)
+    public function createCategory($inputs)
     {
-        return $this->model->where('id', $categoryId)->update($inputs);
+        $inputs['category_slug'] = Str::slug($inputs['category_name']) ?? '-';
+
+        return $this->model->create($inputs);
+    }
+
+    public function updateCategory($categoryId, $categoryUpdate)
+    {
+        return $this->model->where('id', $categoryId)->update($categoryUpdate);
     }
 
     public function destroyCategory($categoryId)
@@ -42,12 +48,5 @@ class CategoryService extends BaseService
             })
             ->orderBy('category_order')
             ->get();
-    }
-
-    public function updateSortCategories($sortValue)
-    {
-        foreach ($sortValue as $sort => $value) {
-            $this->model->where('id', $value['id'])->update(['category_order' => $sort + 1]);
-        }
     }
 }
