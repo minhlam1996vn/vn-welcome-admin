@@ -12,6 +12,11 @@ class CategoryService extends BaseService
         $this->model = $model;
     }
 
+    public function getCategory($categoryId)
+    {
+        return $this->model->findOrFail($categoryId);
+    }
+
     public function getAllCategories()
     {
         return $this->model->all();

@@ -37,7 +37,7 @@
                                             </span>
                                         </div>
                                         <div>
-                                            <a href="{{ route('admin.category.create') }}"
+                                            <a href="{{ route('admin.category.update', $category->id) }}"
                                                 class="btn btn-sm btn-success rounded">Sửa</a>
                                             <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
                                         </div>
@@ -47,101 +47,6 @@
                                 <div class="text-center text-muted">Không có dữ liệu hiển thị</div>
                             @endforelse
 
-                            {{-- <div data-id="1" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="ms-1">Con người Việt Nam</div>
-                                    <div>
-                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-id="2" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="ms-1">Ngày lễ và những trải nghiệm</div>
-                                    <div>
-                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-id="3" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="ms-1">Tin tức thị trường</div>
-                                    <div>
-                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-id="4" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="ms-1">63 Tỉnh thành</div>
-                                    <div>
-                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-id="5" class="list-group-item nested-1 border rounded shadow-lg mb-2 p-2">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="ms-1">Ẩm thực - Du lịch</div>
-                                    <div>
-                                        <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                        <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-id="6" class="list-group-item nested-2 border rounded shadow-lg mb-2 p-2">
-                                <div class="mb-3">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="ms-1">Blog khoa học công nghệ</div>
-                                        <div>
-                                            <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                            <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group px-2" id="list-sort-6">
-                                    <div data-id="7"
-                                        class="d-none list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="ms-1">Blog tin tức</div>
-                                            <div>
-                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-id="8" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="ms-1">Blog công nghệ</div>
-                                            <div>
-                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-id="9" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="ms-1">Blog khoa học</div>
-                                            <div>
-                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div data-id="10" class="list-group-item nested-3 border rounded shadow-lg mb-2 p-2">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="ms-1">Blog tổng hợp</div>
-                                            <div>
-                                                <a href="#!" class="btn btn-sm btn-success rounded">Sửa</a>
-                                                <button type="button" class="btn btn-sm btn-danger rounded">Xoá</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -156,77 +61,6 @@
             <button id="get-order" class="btn btn-primary">Lưu thay đổi</button>
         </form>
     </div>
-
-    {{-- <div class="card shadow-lg">
-        <form method="GET" action="">
-            <div class="card-body pb-0">
-                <div class="row">
-                    <div class="col-12 col-md-5">
-                        <div class="mb-3 d-flex align-items-center">
-                            <label style="width: 100px" for="search-category" class="me-2">Danh mục</label>
-                            <div class="w-100">
-                                <input type="text" name="category_name" value="{{ request()->category_name }}"
-                                    id="search-category" class="form-control" placeholder="Nhập tên danh mục">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5"></div>
-                    <div class="col-12 col-md-2">
-                        <div class="mb-3 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary border shadow">
-                                Tìm kiếm
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="my-4">
-        <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="true" />
-    </div>
-
-    <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 60vh; overflow: auto">
-        <div class="card-body min-vh-50">
-            <table class="table table-responsive table-striped w-100">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th class="d-none d-md-table-cell">Company</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($categories as $key => $category)
-                        <tr>
-                            <td>
-                                {{ ++$key }}
-                            </td>
-                            <td>
-                                {{ $category->category_name }}
-                            </td>
-                            <td>
-                                {{ $category->category_slug }}
-                            </td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center">
-                                Không có dữ liệu hiển thị
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <x-pagination :links="$categories->onEachSide(0)->links()" :show-limit="false" /> --}}
 @endsection
 
 @push('scripts')

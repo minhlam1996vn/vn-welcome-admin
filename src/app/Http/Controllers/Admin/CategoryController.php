@@ -48,7 +48,9 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = $this->categoryService->getCategory($id);
+
+        return view('admin.category.update', compact('category'));
     }
 
     /**
