@@ -12,6 +12,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Tên danh mục</label>
+                            <span class="text-danger">(*)</span>
                             <input type="text" name="category_name" value="{{ $category->category_name }}"
                                 class="form-control" placeholder="Nhập tên danh mục">
                         </div>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\CategoryService;
@@ -33,7 +32,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->getAllCategoriesParent();
 
         return view('admin.category.create', compact('categories'));
     }
@@ -109,16 +108,10 @@ class CategoryController extends Controller
     {
         $sortValueArray = json_decode($request->sort_value, true);
 
-        foreach ($sortValueArray as $sort => $categoryInfo) {
-            $this->categoryService->updateCategory($categoryInfo['id'], ['category_order' => $sort + 1]);
-
-            if ($categoryInfo['children']) {
-                foreach ($categoryInfo['children'] as $sort => $categoryChildrenInfo) {
-                    $this->categoryService->updateCategory($categoryChildrenInfo['id'], ['category_order' => $sort + 1]);
-                }
-            }
+        if ($this->categoryService->updateSortCategories($sortValueArray)) {
+            return redirect()->back()->with('success', 'Sắp xếp danh mục thành công');
         }
 
-        return redirect()->back()->with('success', 'Sắp xếp danh mục thành công');
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 }

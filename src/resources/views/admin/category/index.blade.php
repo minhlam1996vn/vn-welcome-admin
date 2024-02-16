@@ -38,16 +38,16 @@
                                                 class="btn btn-sm btn-info rounded">
                                                 <i class="align-middle" data-feather="edit"></i>
                                             </a>
-                                            {{-- @if ($category->articles->count() === 0) --}}
-                                            <form action="{{ route('admin.category.destroy', $category['id']) }}"
-                                                method="POST"class="d-inline-block">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-danger rounded">
-                                                    <i class="align-middle" data-feather="trash"></i>
-                                                </button>
-                                            </form>
-                                            {{-- @endif --}}
+                                            @if ($category['article_count'] === 0 && $category['category_children_count'] === 0)
+                                                <form action="{{ route('admin.category.destroy', $category['id']) }}"
+                                                    method="POST"class="d-inline-block">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger rounded">
+                                                        <i class="align-middle" data-feather="trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -67,16 +67,18 @@
                                                                 class="btn btn-sm btn-secondary rounded">
                                                                 <i class="align-middle" data-feather="edit"></i>
                                                             </a>
-                                                            <form
-                                                                action="{{ route('admin.category.destroy', $categoryChildren['id']) }}"
-                                                                method="POST"class="d-inline-block">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-danger rounded">
-                                                                    <i class="align-middle" data-feather="trash"></i>
-                                                                </button>
-                                                            </form>
+                                                            @if ($categoryChildren['article_count'] === 0)
+                                                                <form
+                                                                    action="{{ route('admin.category.destroy', $categoryChildren['id']) }}"
+                                                                    method="POST"class="d-inline-block">
+                                                                    @method('DELETE')
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-danger rounded">
+                                                                        <i class="align-middle" data-feather="trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -108,7 +110,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     <script>
-        // List category sortable
+        /* ---- SORTTABLE ---- */
         $('#list-category').sortable({
             group: {
                 name: 'list',
@@ -119,8 +121,7 @@
             onSort: reportActivity,
         });
 
-        // List child category sortable
-        const categoriesId = '{{ collect($categoriesTree)->pluck('id') }}'
+        const categoriesId = "{{ collect($categoriesTree)->pluck('id') }}"
         const parseCategoriesId = JSON.parse(categoriesId);
 
         for (let i = 0; i < parseCategoriesId.length; i++) {
@@ -135,21 +136,15 @@
             });
         }
 
-        // Report when the sort order has changed
         function reportActivity() {
             return
         };
 
-        // Arrays of "data-id"
         $('#get-order').click(function() {
             const sortValue = getNestedSortOrder('#list-category');
             $('#sort-value').val(JSON.stringify(sortValue));
-
-            // const sortValue = $('#list-category').sortable('toArray');
-            // console.log(sortValue);
         });
 
-        // get nested sort order
         function getNestedSortOrder(selector) {
             const result = [];
 
@@ -164,5 +159,6 @@
 
             return result;
         }
+        /* ---- END SORTTABLE ---- */
     </script>
 @endpush

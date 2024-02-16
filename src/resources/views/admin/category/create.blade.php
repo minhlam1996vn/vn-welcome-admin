@@ -11,6 +11,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Tên danh mục</label>
+                            <span class="text-danger">(*)</span>
                             <input type="text" name="category_name" value="" class="form-control"
                                 placeholder="Nhập tên danh mục">
                         </div>
@@ -28,7 +29,7 @@
                         <div class="mb-3">
                             <label class="form-label">Danh mục cha</label>
                             <select class="form-select" name="parent_id">
-                                <option disabled selected>Chọn danh mục cha</option>
+                                <option value="">--- Mặc định ---</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach

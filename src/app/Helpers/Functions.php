@@ -26,7 +26,9 @@ function getCategories($categories, $parent_id = 0, $char = '')
         if ($item['parent_id'] == $parent_id) {
             $category = [
                 'id' => $item['id'],
-                'category_name' => $item['category_name']
+                'category_name' => $item['category_name'],
+                'article_count' => $item->articles->count(),
+                'category_children_count' => $item->childCategories->count(),
                 // 'category_name' => $char . $item['category_name']
             ];
 

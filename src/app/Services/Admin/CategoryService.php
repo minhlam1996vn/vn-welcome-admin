@@ -5,6 +5,8 @@ namespace App\Services\Admin;
 use App\Services\BaseService;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CategoryService extends BaseService
 {
@@ -35,6 +37,11 @@ class CategoryService extends BaseService
         return $this->model->destroy($categoryId);
     }
 
+    public function getAllCategoriesParent()
+    {
+        return $this->model->whereNull('parent_id')->orderBy('category_order')->get();
+    }
+
     public function getAllCategories()
     {
         return $this->model->all();
@@ -48,5 +55,26 @@ class CategoryService extends BaseService
             })
             ->orderBy('category_order')
             ->get();
+    }
+
+    public function updateSortCategories($sortValueArray)
+    {
+        try {
+            foreach ($sortValueArray as $sort => $categoryInfo) {
+                $this->updateCategory($categoryInfo['id'], ['category_order' => $sort + 1]);
+
+                if ($categoryInfo['children']) {
+                    foreach ($categoryInfo['children'] as $sort => $categoryChildrenInfo) {
+                        $this->updateCategory($categoryChildrenInfo['id'], ['category_order' => $sort + 1]);
+                    }
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            Log::error('Error update sort categories: ' . $e->getMessage());
+
+            return false;
+        }
     }
 }
