@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Services\BaseService;
 use App\Models\Article;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleService extends BaseService
 {
@@ -34,7 +35,33 @@ class ArticleService extends BaseService
             ->when(isset($params['article_title']), function ($query) use ($params) {
                 $query->where('article_title', 'like', '%' . $params['article_title'] . '%');
             })
+            ->orderBy('created_at', 'DESC')
             ->paginate($limit)
             ->withQueryString();
+    }
+
+    /**
+     * Create a new article.
+     *
+     * @param array $inputs The input data for creating the article.
+     * @return mixed The created article.
+     */
+    public function createArticle($inputs)
+    {
+        return $this->model->create($inputs);
+    }
+
+    /**
+     * Uploads the thumbnail for an article and returns the URL.
+     *
+     * @param \Illuminate\Http\UploadedFile $fileUpload The uploaded file for the article thumbnail.
+     * @return string The URL of the uploaded article thumbnail.
+     */
+    public function uploadThumbnailArticle($fileUpload)
+    {
+        $path = Storage::disk()->put('articles', $fileUpload);
+        $url = Storage::disk()->url($path);
+
+        return $url;
     }
 }

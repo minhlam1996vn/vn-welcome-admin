@@ -64,11 +64,13 @@ function showCategories($categories, $parent_id = 0, $char = '')
 {
     foreach ($categories as $key => $item) {
         if ($item['parent_id'] == $parent_id) {
-            echo "<option value=\"{$item->id}\">$char{$item->category_name}</option>";
+            $isTrue = request()->category_id == $item->id ? 'selected' : '';
+
+            echo "<option $isTrue value=\"{$item->id}\">$char{$item->category_name}</option>";
 
             unset($categories[$key]);
 
-            showCategories($categories, $item['id'], $char . '|---');
+            showCategories($categories, $item['id'], $char . '|--- ');
         }
     }
 }

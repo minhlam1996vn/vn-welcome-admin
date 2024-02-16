@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\ArticleService;
 use App\Services\Admin\CategoryService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -72,7 +74,31 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // Prepare data for creating a new article
+        $articleCreate = [
+            'user_id' => Auth::guard('admin')->id(),
+            'article_title' => $request->article_title,
+            'article_slug' => Str::slug($request->article_title),
+            'article_description' => $request->article_description,
+            'article_keywords' => $request->article_keywords,
+            'article_content' => $request->article_content,
+            'category_id' => $request->category_id,
+            'article_thumbnail' => 'https://placehold.jp/1280x720.png',
+        ];
+
+        // Check if an article thumbnail is provided in the request
+        if ($request->article_thumbnail) {
+            $articleThumbnail = $this->articleService->uploadThumbnailArticle($request->article_thumbnail);
+
+            $articleCreate['article_thumbnail'] = $articleThumbnail;
+        }
+
+        // Attempt to create the article and redirect based on the result
+        if ($this->articleService->createArticle($articleCreate)) {
+            return redirect()->route('admin.article.index')->with('success', 'Thêm bài viết thành công');
+        }
+
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 
     /**

@@ -20,12 +20,7 @@
                             <div class="w-100">
                                 <select name="category_id" id="search-category" class="form-select">
                                     <option value="">Tất cả danh mục</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ ($params['category_id'] ?? null) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->category_name }}
-                                        </option>
-                                    @endforeach
+                                    {{ showCategories($categories) }}
                                 </select>
                             </div>
                         </div>
@@ -70,9 +65,11 @@
                     @forelse ($articles as $key => $article)
                         <tr>
                             <td>
-                                <div style="width: 50px">
-                                    <img class="img-thumbnail" src="{{ $article->article_thumbnail }}"
-                                        alt="{{ $article->article_title }}">
+                                <div style="width: 75px">
+                                    <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
+                                        <img src="{{ $article->article_thumbnail }}" alt="{{ $article->article_title }}"
+                                            class="w-100 object-fit-cover">
+                                    </div>
                                 </div>
                             </td>
                             <td>

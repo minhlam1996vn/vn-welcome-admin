@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST">
+    <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -60,10 +60,12 @@
                         <div class="mb-3">
                             <label class="form-label">Ảnh hiển thị</label>
                             <div class="mt-1 rounded-4 border">
-                                <input type="file" id="article-thumbnail" name="article_thumbnail" class="d-none">
+                                <input type="file" onchange="previewImage(event)" id="article-thumbnail"
+                                    name="article_thumbnail" class="d-none">
                                 <label for="article-thumbnail"
                                     class="btn ratio ratio-16x9 overflow-hidden rounded-4 shadow-lg">
-                                    <img src="https://placehold.jp/1280x720.png" class="w-100 object-fit-cover">
+                                    <img id="preview" src="https://placehold.jp/1280x720.png"
+                                        class="w-100 object-fit-cover">
                                 </label>
                             </div>
                         </div>
@@ -161,6 +163,22 @@
             textareaElement.value = articleContent;
 
             document.getElementById("form-create-article").submit();
+        }
+
+        function previewImage(event) {
+            var input = event.target;
+            var preview = document.getElementById('preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
 @endpush

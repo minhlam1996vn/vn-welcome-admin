@@ -21,7 +21,7 @@ class MediaController extends Controller
             $fileName = $request->file('upload')->getClientOriginalName();
 
             // Store the uploaded file in the 'media/articles' directory
-            $path = Storage::disk()->put('media/articles', $request->file('upload'));
+            $path = Storage::disk()->put('media', $request->file('upload'));
 
             // Get the URL of the stored file
             $url = Storage::disk()->url($path);
