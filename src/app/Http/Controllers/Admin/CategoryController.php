@@ -8,8 +8,18 @@ use App\Services\Admin\CategoryService;
 
 class CategoryController extends Controller
 {
+    /**
+     * The category service instance.
+     *
+     * @var CategoryService
+     */
     protected $categoryService;
 
+    /**
+     * Constructor for CategoryController class.
+     *
+     * @param CategoryService $categoryService The category service instance.
+     */
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
@@ -17,6 +27,9 @@ class CategoryController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * @param Request $request The HTTP request instance.
+     * @return \Illuminate\View\View The view for listing categories.
      */
     public function index(Request $request)
     {
@@ -29,6 +42,8 @@ class CategoryController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View The view for creating a category.
      */
     public function create()
     {
@@ -39,6 +54,9 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param Request $request The HTTP request instance.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after storing the category.
      */
     public function store(Request $request)
     {
@@ -61,6 +79,9 @@ class CategoryController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param string $id The ID of the category to be edited.
+     * @return \Illuminate\View\View The view for editing a category.
      */
     public function edit(string $id)
     {
@@ -72,6 +93,10 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param Request $request The HTTP request instance.
+     * @param string $id The ID of the category to be updated.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after updating the category.
      */
     public function update(Request $request, string $id)
     {
@@ -91,6 +116,9 @@ class CategoryController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param string $id The ID of the category to be deleted.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after deleting the category.
      */
     public function destroy(string $id)
     {
@@ -102,7 +130,10 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update Sort Categories.
+     * Update the sorting order of categories.
+     *
+     * @param Request $request The HTTP request instance.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after updating the sort order.
      */
     public function updateSortCategories(Request $request)
     {

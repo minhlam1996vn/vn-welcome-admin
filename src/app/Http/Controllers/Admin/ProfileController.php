@@ -9,6 +9,8 @@ class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View The view for listing user profiles.
      */
     public function index()
     {

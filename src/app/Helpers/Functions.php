@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Get query string custom
+ * Extract and modify query parameters from the current request's query string.
  *
- * @return string
+ * @return string The modified query string.
  */
 function getQueryStringCustom()
 {
@@ -18,7 +18,14 @@ function getQueryStringCustom()
     return http_build_query($queryParams);
 }
 
-function getCategories($categories, $parent_id = 0, $char = '')
+/**
+ * Recursively retrieve categories and their details.
+ *
+ * @param array   $categories Array of category items.
+ * @param int     $parent_id  Parent ID to start from (default: 0).
+ * @return array  Array of categories with details.
+ */
+function getCategories($categories, $parent_id = 0)
 {
     $result = [];
 
@@ -29,18 +36,39 @@ function getCategories($categories, $parent_id = 0, $char = '')
                 'category_name' => $item['category_name'],
                 'article_count' => $item->articles->count(),
                 'category_children_count' => $item->childCategories->count(),
-                // 'category_name' => $char . $item['category_name']
             ];
 
-            $childCategories = getCategories($categories, $item['id'], $char . '|---');
+            unset($categories[$key]);
+
+            $childCategories = getCategories($categories, $item['id']);
             if (!empty($childCategories)) {
                 $category['children'] = $childCategories;
             }
 
             $result[] = $category;
-            unset($categories[$key]);
         }
     }
 
     return $result;
+}
+
+/**
+ * Show categories recursively in HTML <option> format.
+ *
+ * @param array   $categories Array of category items.
+ * @param int     $parent_id  Parent ID to start from (default: 0).
+ * @param string  $char       Prefix string for subcategories (default: '').
+ * @return void
+ */
+function showCategories($categories, $parent_id = 0, $char = '')
+{
+    foreach ($categories as $key => $item) {
+        if ($item['parent_id'] == $parent_id) {
+            echo "<option value=\"{$item->id}\">$char{$item->category_name}</option>";
+
+            unset($categories[$key]);
+
+            showCategories($categories, $item['id'], $char . '|---');
+        }
+    }
 }

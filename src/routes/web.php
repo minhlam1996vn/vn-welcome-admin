@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /*
- * Client
+ * CLIENT
  */
 
 Auth::routes([
@@ -43,8 +43,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::middleware('auth:admin')->group(function () {
-        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::resource('/category', CategoryController::class);
@@ -55,5 +53,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
         Route::post('/media', [MediaController::class, 'upload'])->name('media.upload');
+
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 });

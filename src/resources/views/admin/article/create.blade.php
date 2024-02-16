@@ -9,25 +9,34 @@
 @endpush
 
 @section('content')
-    <form action="">
+    <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST">
+        @csrf
         <div class="row">
             <div class="col-12 col-lg-8">
                 <div class="card">
-                    <div class="card-header pb-0">
-                        <h5 class="card-title mb-0">Biên tập</h5>
-                    </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <input type="text" name="title" class="form-control" placeholder="Nhập tiêu đề bài viết">
+                            <label class="form-label">Tiêu đề</label>
+                            <span class="text-danger">(*)</span>
+                            <input type="text" name="article_title" class="form-control"
+                                placeholder="Nhập tiêu đề bài viết">
                         </div>
 
                         <div class="mb-3">
-                            <textarea rows="3" name="description" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
+                            <label class="form-label">Mô tả</label>
+                            <textarea rows="2" name="article_description" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Từ khóa</label>
+                            <textarea rows="2" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nội dung</label>
                             <div id="toolbar-container" class="shadow rounded"></div>
                             <div id="editor-article"></div>
+                            <textarea name="article_content" class="d-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -35,34 +44,37 @@
 
             <div class="col-12 col-lg-4">
                 <div class="card">
-                    <div class="card-header pb-0">
-                        <h5 class="card-title mb-0">Cài đặt bổ sung</h5>
-                    </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <select class="form-select" name="category">
-                                <option disabled selected>Cài đặt danh mục</option>
-                                <option value="">Con người Việt Nam</option>
-                                <option value="">Ngày lễ và những trải nghiệm</option>
-                                <option value="">Tin tức thị trường</option>
-                                <option value="">63 Tỉnh thành</option>
-                                <option value="">Ẩm thực - Du lịch</option>
-                                <option value="">Blog</option>
-                                <option value="">Âm thanh - Hình ảnh</option>
+                            <label class="form-label">Danh mục</label>
+                            <span class="text-danger">(*)</span>
+                            <select class="form-select" name="category_id">
+                                <option value="">--- Chọn danh mục ---</option>
+                                {{ showCategories($categories) }}
                             </select>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="title" class="form-control" placeholder="Cài đặt tag">
+                            <label class="form-label">Tag</label>
+                            <input type="text" name="tag_id[]" class="form-control" placeholder="Cài đặt tag">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ảnh hiển thị</label>
+                            <div class="mt-1 rounded-4 border">
+                                <input type="file" id="article-thumbnail" name="article_thumbnail" class="d-none">
+                                <label for="article-thumbnail"
+                                    class="btn ratio ratio-16x9 overflow-hidden rounded-4 shadow-lg">
+                                    <img src="https://placehold.jp/1280x720.png" class="w-100 object-fit-cover">
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="text-center">
+            <button type="button" onclick="createArticle()" class="btn btn-primary shadow">Thêm bài viết</button>
+        </div>
     </form>
-
-    <div class="text-center">
-        <button class="btn btn-primary shadow">Thêm bài viết</button>
-    </div>
 @endsection
 
 @push('scripts')
@@ -70,6 +82,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/decoupled-document/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
     <script>
+        /* --- CKEDITOR --- */
         DecoupledEditor
             .create(document.querySelector('#editor-article'), {
                 language: 'vi',
@@ -139,5 +152,15 @@
             .catch(error => {
                 console.error(error);
             });
+
+        /* --- END CKEDITOR --- */
+        function createArticle() {
+            const articleContent = document.getElementById("editor-article").innerHTML;
+            const textareaElement = document.querySelector('textarea[name="article_content"]');
+
+            textareaElement.value = articleContent;
+
+            document.getElementById("form-create-article").submit();
+        }
     </script>
 @endpush
