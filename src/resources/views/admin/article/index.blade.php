@@ -58,14 +58,14 @@
 
     <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 60vh; overflow: auto">
         <div class="card-body min-vh-50">
-            <table class="table table-responsive table-striped" style="min-width: 1200px">
+            <table class="table table-responsive table-striped" style="min-width: 1000px">
                 <thead>
                     <tr>
                         <th style="width: 100px" class="text-center">#</th>
-                        <th style="width: 400px">Tên bài viết</th>
+                        <th style="width: 200px">Tên bài viết</th>
                         <th>Danh mục</th>
-                        <th style="width: 180px" class="text-center">Ngày tạo</th>
-                        <th style="width: 180px" class="text-center">Ngày phát hành</th>
+                        <th style="width: 150px" class="text-center">Ngày tạo</th>
+                        <th style="width: 150px" class="text-center">Ngày phát hành</th>
                         <th style="width: 100px" class="text-center">Trạng thái</th>
                         <th style="width: 100px"></th>
                     </tr>
@@ -100,11 +100,13 @@
                                 <span class="badge bg-success">Kích hoạt</span>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.article.edit', $article->id) }}"
+                                <a href="{{ route('admin.article.edit', $article->id) }}" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="Biên tập"
                                     class="btn btn-sm btn-secondary rounded">
                                     <i class="align-middle" data-feather="edit"></i>
                                 </a>
-                                <a href="" class="btn btn-sm btn-danger rounded">
+                                <a href="" class="btn btn-sm btn-danger rounded" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="Xoá">
                                     <i class="align-middle" data-feather="trash"></i>
                                 </a>
                             </td>
