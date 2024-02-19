@@ -20,7 +20,7 @@
                             <div class="w-100">
                                 <select name="category_id" id="search-category" class="form-select">
                                     <option value="">Tất cả danh mục</option>
-                                    {{ showCategories($categories) }}
+                                    {{ showCategories($categories, 0, null, request()->category_id) }}
                                 </select>
                             </div>
                         </div>
@@ -46,42 +46,67 @@
         </form>
     </div>
 
-    <div class="my-4">
+    <div class="mt-4">
         <x-pagination :links="$articles->onEachSide(0)->links()" :show-limit="true" />
+    </div>
+
+    <div class="d-flex justify-content-end mt-1 px-2">
+        <span class="text-info">
+            {{ $articles->firstItem() }} ~ {{ $articles->lastItem() }} / {{ $articles->total() }}
+        </span>
     </div>
 
     <div class="card shadow-lg" style="border-top: 5px solid #3b7ddd; max-height: 60vh; overflow: auto">
         <div class="card-body min-vh-50">
-            <table class="table table-responsive table-striped w-100">
+            <table class="table table-responsive table-striped" style="min-width: 1200px">
                 <thead>
                     <tr>
-                        <th class="text-center">#</th>
-                        <th>Tên bài viết</th>
-                        <th class="d-none d-md-table-cell">Mô tả</th>
-                        <th>Status</th>
+                        <th style="width: 100px" class="text-center">#</th>
+                        <th style="width: 400px">Tên bài viết</th>
+                        <th>Danh mục</th>
+                        <th style="width: 180px" class="text-center">Ngày tạo</th>
+                        <th style="width: 180px" class="text-center">Ngày phát hành</th>
+                        <th style="width: 100px" class="text-center">Trạng thái</th>
+                        <th style="width: 100px"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($articles as $key => $article)
                         <tr>
                             <td>
-                                <div style="width: 75px">
-                                    <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
-                                        <img src="{{ $article->article_thumbnail }}" alt="{{ $article->article_title }}"
-                                            class="w-100 object-fit-cover">
-                                    </div>
+                                <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
+                                    <img src="{{ $article->article_thumbnail }}" alt="{{ $article->article_title }}"
+                                        class="w-100 object-fit-cover">
                                 </div>
                             </td>
                             <td>
-                                <a href="#!">
+                                <a href="{{ route('admin.article.show', $article->id) }}" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="{{ $article->article_title }}">
                                     {{ Str::limit($article->article_title, 50, '...') }}
                                 </a>
                             </td>
                             <td>
-                                {{ Str::limit($article->article_content, 100, '...') }}
+                                <a href="{{ route('admin.category.edit', $article->category->id) }}" class="text-info">
+                                    {{ $article->category->category_name }}
+                                </a>
                             </td>
-                            <td>
-                                <span class="badge bg-success">Active</span>
+                            <td class="text-center">
+                                {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}
+                            </td>
+                            <td class="text-center">
+                                {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-success">Kích hoạt</span>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('admin.article.edit', $article->id) }}"
+                                    class="btn btn-sm btn-secondary rounded">
+                                    <i class="align-middle" data-feather="edit"></i>
+                                </a>
+                                <a href="" class="btn btn-sm btn-danger rounded">
+                                    <i class="align-middle" data-feather="trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @empty

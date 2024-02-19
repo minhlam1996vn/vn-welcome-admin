@@ -108,7 +108,10 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $article = $this->articleService->getArticle($id);
+        $categories = $this->categoryService->getAllCategories();
+
+        return view('admin.article.show', compact('article', 'categories'));
     }
 
     /**
@@ -118,7 +121,10 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $article = $this->articleService->getArticle($id);
+        $categories = $this->categoryService->getAllCategories();
+
+        return view('admin.article.update', compact('article', 'categories'));
     }
 
     /**
@@ -129,7 +135,25 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $articleUpdate = [
+            'article_title' => $request->article_title,
+            'article_description' => $request->article_description,
+            'article_keywords' => $request->article_keywords,
+            'article_content' => $request->article_content,
+            'category_id' => $request->category_id,
+        ];
+
+        if ($request->article_thumbnail) {
+            $articleThumbnail = $this->articleService->uploadThumbnailArticle($request->article_thumbnail);
+
+            $articleUpdate['article_thumbnail'] = $articleThumbnail;
+        }
+
+        if ($this->articleService->updateArticle($id, $articleUpdate)) {
+            return redirect()->route('admin.article.index')->with('success', 'Cập nhật bài viết thành công');
+        }
+
+        return redirect()->back()->with('error', 'Có lỗi xảy ra');
     }
 
     /**

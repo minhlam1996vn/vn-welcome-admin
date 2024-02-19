@@ -57,20 +57,21 @@ function getCategories($categories, $parent_id = 0)
  *
  * @param array   $categories Array of category items.
  * @param int     $parent_id  Parent ID to start from (default: 0).
- * @param string  $char       Prefix string for subcategories (default: '').
+ * @param string  $char       Prefix string for subcategories (default: null).
+ * @param int $categoryId The ID of the currently selected category (default: null).
  * @return void
  */
-function showCategories($categories, $parent_id = 0, $char = '')
+function showCategories($categories, $parent_id = 0, $char = null, $categoryId = null)
 {
     foreach ($categories as $key => $item) {
         if ($item['parent_id'] == $parent_id) {
-            $isTrue = request()->category_id == $item->id ? 'selected' : '';
+            $isSelected = $categoryId == $item->id ? 'selected' : '';
 
-            echo "<option $isTrue value=\"{$item->id}\">$char{$item->category_name}</option>";
+            echo "<option $isSelected value=\"{$item->id}\">$char{$item->category_name}</option>";
 
             unset($categories[$key]);
 
-            showCategories($categories, $item['id'], $char . '|--- ');
+            showCategories($categories, $item['id'], $char . '|--- ', $categoryId);
         }
     }
 }

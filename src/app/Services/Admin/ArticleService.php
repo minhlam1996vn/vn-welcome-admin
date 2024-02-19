@@ -19,6 +19,17 @@ class ArticleService extends BaseService
     }
 
     /**
+     * Get a specific article by its ID.
+     *
+     * @param int $articleId The ID of the article.
+     * @return mixed The retrieved article.
+     */
+    public function getArticle($articleId)
+    {
+        return $this->model->findOrFail($articleId);
+    }
+
+    /**
      * Get paginated articles based on specified parameters.
      *
      * @param array $params The parameters for filtering articles.
@@ -51,6 +62,11 @@ class ArticleService extends BaseService
         return $this->model->create($inputs);
     }
 
+    public function updateArticle($articleId, $articleUpdate)
+    {
+        return $this->model->where('id', $articleId)->update($articleUpdate);
+    }
+
     /**
      * Uploads the thumbnail for an article and returns the URL.
      *
@@ -60,7 +76,7 @@ class ArticleService extends BaseService
     public function uploadThumbnailArticle($fileUpload)
     {
         $path = Storage::disk()->put('articles', $fileUpload);
-        $url = Storage::disk()->url($path);
+        $url = Storage::url($path);
 
         return $url;
     }

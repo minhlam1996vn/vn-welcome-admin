@@ -1,9 +1,11 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Thêm mới bài viết')
+@section('page-title', 'Cập nhật bài viết')
 
 @section('content')
-    <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="form-create-article" action="{{ route('admin.article.update', $article->id) }}" method="POST"
+        enctype="multipart/form-data">
+        @method('PUT')
         @csrf
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -12,24 +14,24 @@
                         <div class="mb-3">
                             <label class="form-label">Tiêu đề</label>
                             <span class="text-danger">(*)</span>
-                            <input type="text" name="article_title" class="form-control"
-                                placeholder="Nhập tiêu đề bài viết">
+                            <input type="text" name="article_title" value="{{ $article->article_title }}"
+                                class="form-control" placeholder="Nhập tiêu đề bài viết">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Mô tả</label>
-                            <textarea rows="2" name="article_description" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
+                            <textarea rows="2" name="article_description" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_description }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Từ khóa</label>
-                            <textarea rows="2" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
+                            <textarea rows="2" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_keywords }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Nội dung</label>
                             <div id="toolbar-container" class="shadow rounded"></div>
-                            <div id="editor-article"></div>
+                            <div id="editor-article">{!! $article->article_content !!}</div>
                             <textarea name="article_content" class="d-none"></textarea>
                         </div>
                     </div>
@@ -44,7 +46,7 @@
                             <span class="text-danger">(*)</span>
                             <select class="form-select" name="category_id">
                                 <option value="">--- Chọn danh mục ---</option>
-                                {{ showCategories($categories) }}
+                                {{ showCategories($categories, 0, null, $article->category_id) }}
                             </select>
                         </div>
                         <div class="mb-3">
@@ -58,7 +60,7 @@
                                     name="article_thumbnail" class="d-none">
                                 <label for="article-thumbnail"
                                     class="btn ratio ratio-16x9 overflow-hidden rounded-4 shadow-lg">
-                                    <img id="preview" src="https://placehold.jp/1280x720.png"
+                                    <img id="preview" src="{{ $article->article_thumbnail }}"
                                         class="w-100 object-fit-cover">
                                 </label>
                             </div>
@@ -68,7 +70,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="button" onclick="createArticle()" class="btn btn-primary shadow">Thêm bài viết</button>
+            <button type="button" onclick="createArticle()" class="btn btn-primary shadow">Cập nhật bài viết</button>
         </div>
     </form>
 @endsection

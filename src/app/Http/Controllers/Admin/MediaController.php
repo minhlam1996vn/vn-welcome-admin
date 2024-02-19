@@ -24,7 +24,7 @@ class MediaController extends Controller
             $path = Storage::disk()->put('media', $request->file('upload'));
 
             // Get the URL of the stored file
-            $url = Storage::disk()->url($path);
+            $url = Storage::url($path);
 
             // Return a JSON response with file information
             return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
