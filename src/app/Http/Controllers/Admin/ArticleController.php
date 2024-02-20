@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\ArticleService;
 use App\Services\Admin\CategoryService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -84,6 +85,7 @@ class ArticleController extends Controller
             'article_content' => $request->article_content,
             'category_id' => $request->category_id,
             'article_thumbnail' => 'https://placehold.jp/1280x720.png',
+            'publication_date' => $request->is_public ? Carbon::now() : null,
         ];
 
         // Check if an article thumbnail is provided in the request
@@ -108,10 +110,13 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
+        Carbon::setLocale('vi');
+
         $article = $this->articleService->getArticle($id);
+        $articlePublicationDate = ucfirst(Carbon::parse($article->publication_date)->isoFormat('dddd, DD/MM/YYYY | HH:mm [GMT]Z'));
         $categories = $this->categoryService->getAllCategories();
 
-        return view('admin.article.show', compact('article', 'categories'));
+        return view('admin.article.show', compact('article', 'articlePublicationDate', 'categories'));
     }
 
     /**
@@ -142,6 +147,10 @@ class ArticleController extends Controller
             'article_content' => $request->article_content,
             'category_id' => $request->category_id,
         ];
+
+        if ($request->is_public) {
+            $articleUpdate['publication_date'] = Carbon::now();
+        }
 
         if ($request->article_thumbnail) {
             $articleThumbnail = $this->articleService->uploadThumbnailArticle($request->article_thumbnail);

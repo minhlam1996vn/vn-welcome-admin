@@ -100,7 +100,7 @@
         <form method="POST" action="{{ route('admin.category.updateSortCategories') }}">
             @csrf
             <textarea id="sort-value" class="d-none" name="sort_value"></textarea>
-            <button id="get-order" class="btn btn-primary">Lưu thay đổi</button>
+            <button id="get-order" class="btn btn-primary">Cập nhật vị trí</button>
         </form>
     </div>
 @endsection

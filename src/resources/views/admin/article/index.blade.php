@@ -65,7 +65,7 @@
                         <th style="width: 200px">Tên bài viết</th>
                         <th>Danh mục</th>
                         <th style="width: 150px" class="text-center">Ngày tạo</th>
-                        <th style="width: 150px" class="text-center">Ngày phát hành</th>
+                        <th style="width: 150px" class="text-center">Ngày xuất bản</th>
                         <th style="width: 100px" class="text-center">Trạng thái</th>
                         <th style="width: 100px"></th>
                     </tr>
@@ -94,10 +94,14 @@
                                 {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}
                             </td>
                             <td class="text-center">
-                                {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}
+                                {{ $article->publication_date ? Carbon\Carbon::parse($article->publication_date)->format('d-m-Y H:i:s') : '-' }}
                             </td>
                             <td class="text-center">
-                                <span class="badge bg-success">Kích hoạt</span>
+                                @if ($article->publication_date)
+                                    <span class="badge badge-success-light">Hiển thị</span>
+                                @else
+                                    <span class="badge badge-secondary-light">Không hiển thị</span>
+                                @endif
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.article.edit', $article->id) }}" data-bs-toggle="tooltip"

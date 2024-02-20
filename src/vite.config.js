@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/admin.css', // https://demo.adminkit.io
                 'resources/css/custom.css',
                 'resources/js/admin.js',
+                'resources/css/content-styles.css',
             ],
             refresh: true,
         }),

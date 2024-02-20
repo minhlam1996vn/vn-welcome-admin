@@ -45,10 +45,6 @@
                         class="sidebar-item {{ request()->segment(2) === 'category' && !request()->segment(3) ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('admin.category.index') }}">Quản lý danh mục</a>
                     </li>
-                    <li
-                        class="sidebar-item {{ request()->segment(2) === 'category' && request()->segment(3) === 'create' ? 'active' : '' }}">
-                        <a class='sidebar-link' href="{{ route('admin.category.create') }}">Thêm mới</a>
-                    </li>
                 </ul>
             </li>
             <li class="sidebar-item {{ request()->segment(2) === 'article' ? 'active' : '' }}">
@@ -63,10 +59,6 @@
                     <li
                         class="sidebar-item {{ request()->segment(2) === 'article' && !request()->segment(3) ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('admin.article.index') }}">Quản lý bài viết</a>
-                    </li>
-                    <li
-                        class="sidebar-item {{ request()->segment(2) === 'article' && request()->segment(3) === 'create' ? 'active' : '' }}">
-                        <a class='sidebar-link' href="{{ route('admin.article.create') }}">Thêm mới</a>
                     </li>
                 </ul>
             </li>

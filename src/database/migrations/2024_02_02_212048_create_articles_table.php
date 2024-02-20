@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('article_content')->nullable();
             $table->string('article_thumbnail')->nullable();
             $table->text('article_keywords')->nullable();
-            $table->date('publication_date')->nullable();
+            $table->datetime('publication_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

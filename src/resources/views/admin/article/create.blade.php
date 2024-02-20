@@ -5,9 +5,10 @@
 @section('content')
     <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
         <div class="row">
-            <div class="col-12 col-lg-8">
-                <div class="card">
+            <div class="col-12 col-lg-8 mb-4">
+                <div class="card h-100 position-relative overflow-hidden">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Tiêu đề</label>
@@ -26,11 +27,12 @@
                             <textarea rows="2" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết"></textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Nội dung</label>
-                            <div id="toolbar-container" class="shadow rounded"></div>
-                            <div id="editor-article"></div>
-                            <textarea name="article_content" class="d-none"></textarea>
+                        <div class="mb-3 form-check">
+                            <input id="is-public" type="checkbox" name="is_public"
+                                class="form-check-input position-relative" style="top: 3px">
+                            <label class="form-check-label" for="is-public">
+                                <span class="btn btn-sm btn-secondary rounded-3">Xuất bản ngay</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -67,6 +69,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nội dung</label>
+                            <div id="toolbar-container" class="shadow rounded"></div>
+                            <div id="editor-article"></div>
+                            <textarea name="article_content" class="d-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="text-center">
             <button type="button" onclick="createArticle()" class="btn btn-primary shadow">Thêm bài viết</button>
         </div>
@@ -151,11 +169,31 @@
 
         /* --- END CKEDITOR --- */
         function createArticle() {
+            // Get the content of the element with the ID "editor-article"
             const articleContent = document.getElementById("editor-article").innerHTML;
+
+            // Create a hidden div element to contain the content and handle attributes
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = articleContent;
+
+            // Iterate through all elements with the attribute contenteditable="true" and remove that attribute
+            const editableElements = tempDiv.querySelectorAll('[contenteditable="true"]');
+            editableElements.forEach((element) => {
+                element.removeAttribute('contenteditable');
+            });
+
+            // Remove HTML tags with class "ck"
+            const resetAllElements = tempDiv.querySelectorAll('.ck');
+            resetAllElements.forEach((element) => {
+                element.parentNode.removeChild(element);
+            });
+
+            // Get the processed content and assign it to the textarea
+            const sanitizedContent = tempDiv.innerHTML;
             const textareaElement = document.querySelector('textarea[name="article_content"]');
+            textareaElement.value = sanitizedContent;
 
-            textareaElement.value = articleContent;
-
+            // Submit the form with the ID "form-create-article"
             document.getElementById("form-create-article").submit();
         }
 
