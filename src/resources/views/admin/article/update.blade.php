@@ -70,7 +70,8 @@
                                     name="article_thumbnail" class="d-none">
                                 <label for="article-thumbnail"
                                     class="btn ratio ratio-16x9 overflow-hidden rounded-4 shadow-lg">
-                                    <img id="preview" src="{{ $article->article_thumbnail }}"
+                                    <img id="preview"
+                                        src="{{ $article->article_thumbnail ? Storage::url($article->article_thumbnail) : 'https://placehold.jp/1280x720.png' }}"
                                         class="w-100 object-fit-cover">
                                 </label>
                             </div>

@@ -99,6 +99,10 @@ class ArticleService extends BaseService
         try {
             $article = $this->model->find($articleId);
 
+            if ($articleUpdate['article_thumbnail']) {
+                Storage::disk()->delete($article->article_thumbnail);
+            }
+
             $articleUpdateResponse = $this->model->where('id', $articleId)->update($articleUpdate);
 
             if (!$arrayTagId) {
@@ -133,9 +137,8 @@ class ArticleService extends BaseService
     public function uploadThumbnailArticle($fileUpload)
     {
         $path = Storage::disk()->put('articles', $fileUpload);
-        $url = '/storage/' . $path;
         // $url = Storage::url($path);
 
-        return $url;
+        return $path;
     }
 }

@@ -79,8 +79,8 @@
                             </td>
                             <td>
                                 <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
-                                    <img src="{{ $article->article_thumbnail }}" alt="{{ $article->article_title }}"
-                                        class="w-100 object-fit-cover">
+                                    <img src="{{ $article->article_thumbnail ? Storage::url($article->article_thumbnail) : 'https://placehold.jp/1280x720.png' }}"
+                                        alt="{{ $article->article_title }}" class="w-100 object-fit-cover">
                                 </div>
                             </td>
                             <td>

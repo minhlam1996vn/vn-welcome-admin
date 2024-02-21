@@ -6,6 +6,7 @@
     <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
+        <input type="hidden" name="uuid" value="{{ Str::uuid() }}">
         <div class="row">
             <div class="col-12 col-lg-8 mb-4">
                 <div class="card h-100 position-relative overflow-hidden">

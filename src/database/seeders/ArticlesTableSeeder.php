@@ -21,13 +21,13 @@ class ArticlesTableSeeder extends Seeder
             $title = $faker->sentence;
 
             $article = Article::create([
+                'uuid' => Str::uuid(),
                 'user_id' => 1,
                 'category_id' => $faker->numberBetween(1, 7),
                 'article_title' => $title,
                 'article_slug' => Str::slug($title),
                 'article_description' => 'Description: ' . $title,
                 'article_content' => $faker->paragraph,
-                'article_thumbnail' => 'https://placehold.jp/1280x720.png', //'https://via.placeholder.com/1600x900.png/0066bb?text=16:9', //$faker->imageUrl()
                 'created_at' => $faker->dateTime(),
                 'updated_at' => $faker->dateTime()
             ]);

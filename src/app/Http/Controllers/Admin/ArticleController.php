@@ -89,6 +89,7 @@ class ArticleController extends Controller
     {
         // Prepare data for creating a new article
         $articleCreate = [
+            'uuid' => $request->uuid,
             'user_id' => Auth::guard('admin')->id(),
             'article_title' => $request->article_title,
             'article_slug' => Str::slug($request->article_title),
@@ -96,7 +97,6 @@ class ArticleController extends Controller
             'article_keywords' => $request->article_keywords,
             'article_content' => $request->article_content,
             'category_id' => $request->category_id,
-            'article_thumbnail' => 'https://placehold.jp/1280x720.png',
             'publication_date' => $request->is_public ? Carbon::now() : null,
         ];
 
