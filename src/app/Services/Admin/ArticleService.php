@@ -133,7 +133,8 @@ class ArticleService extends BaseService
     public function uploadThumbnailArticle($fileUpload)
     {
         $path = Storage::disk()->put('articles', $fileUpload);
-        $url = Storage::url($path);
+        $url = '/storage/' . $path;
+        // $url = Storage::url($path);
 
         return $url;
     }
