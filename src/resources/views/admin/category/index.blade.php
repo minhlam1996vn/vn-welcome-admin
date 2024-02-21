@@ -96,13 +96,15 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <form method="POST" action="{{ route('admin.category.sort') }}">
-            @csrf
-            <textarea id="sort-value" class="d-none" name="sort_value"></textarea>
-            <button id="get-order" class="btn btn-primary">Cập nhật vị trí</button>
-        </form>
-    </div>
+    @if (!empty($categoriesTree))
+        <div class="text-center">
+            <form method="POST" action="{{ route('admin.category.sort') }}">
+                @csrf
+                <textarea id="sort-value" class="d-none" name="sort_value"></textarea>
+                <button id="get-order" class="btn btn-primary">Cập nhật vị trí</button>
+            </form>
+        </div>
+    @endif
 @endsection
 
 @push('scripts')

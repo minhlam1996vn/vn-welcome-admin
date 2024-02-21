@@ -78,7 +78,7 @@ class ArticleService extends BaseService
             return $article;
         } catch (QueryException $e) {
             DB::rollback();
-            Log::error('Error creating article: ' . $e->getMessage());
+            throw ($e);
 
             return null;
         }
@@ -118,7 +118,7 @@ class ArticleService extends BaseService
             return $articleUpdateResponse;
         } catch (QueryException $e) {
             DB::rollback();
-            Log::error('Error updating article: ' . $e->getMessage());
+            throw ($e);
 
             return false;
         }

@@ -124,7 +124,7 @@ class CategoryService extends BaseService
 
             return true;
         } catch (Exception $e) {
-            Log::error('Error update sort categories: ' . $e->getMessage());
+            throw ($e);
 
             return false;
         }
