@@ -53,8 +53,15 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Tag</label>
-                            <input type="text" name="tag_id[]" class="form-control" placeholder="Cài đặt tag">
+                            <label class="form-label">Tags</label>
+                            <select name="tag_id[]" id="article-tags" class="form-control" multiple>
+                                @foreach ($tags as $tag)
+                                    <option value="{{ $tag->id }}"
+                                        {{ $article->tags->contains($tag->id) ? 'selected' : '' }}>
+                                        {{ $tag->tag_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Ảnh hiển thị</label>
@@ -98,6 +105,26 @@
     {{-- https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/quick-start.html --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/decoupled-document/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var articleTags = document.querySelector("#article-tags");
+            var multipleCancelButton = new Choices(articleTags, {
+                removeItemButton: true,
+                maxItemCount: 3,
+                placeholder: true,
+                placeholderValue: 'Chọn tags...',
+                searchPlaceholderValue: 'Tìm kiếm tags...',
+                itemSelectText: 'Nhấn để chọn',
+                uniqueItemText: 'Tag này đã tồn tại.',
+                noResultsText: 'Không tìm thấy kết quả',
+                noChoicesText: 'Không có lựa chọn nào',
+                maxItemText: function(maxItemCount) {
+                    return 'Chỉ có thể thêm ' + (maxItemCount === 1 ? '1 tag' : maxItemCount + ' tags');
+                },
+            });
+        });
+    </script>
     <script>
         /* --- CKEDITOR --- */
         DecoupledEditor

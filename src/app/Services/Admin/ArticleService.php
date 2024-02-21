@@ -4,6 +4,10 @@ namespace App\Services\Admin;
 
 use App\Services\BaseService;
 use App\Models\Article;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleService extends BaseService
@@ -52,19 +56,72 @@ class ArticleService extends BaseService
     }
 
     /**
-     * Create a new article.
+     * Create a new article with optional tags.
      *
      * @param array $inputs The input data for creating the article.
+     * @param array|null $arrayTagId An array of tag IDs to associate with the article.
      * @return mixed The created article.
      */
-    public function createArticle($inputs)
+    public function createArticle($inputs, $arrayTagId)
     {
-        return $this->model->create($inputs);
+        DB::beginTransaction();
+
+        try {
+            $article = $this->model->create($inputs);
+
+            if ($article && $arrayTagId) {
+                $article->tags()->attach($arrayTagId);
+            }
+
+            DB::commit();
+
+            return $article;
+        } catch (QueryException $e) {
+            DB::rollback();
+            Log::error('Error creating article: ' . $e->getMessage());
+
+            return null;
+        }
     }
 
-    public function updateArticle($articleId, $articleUpdate)
+    /**
+     * Update an existing article with optional tags.
+     *
+     * @param int $articleId The ID of the article to be updated.
+     * @param array $articleUpdate The input data for updating the article.
+     * @param array|null $arrayTagId An array of tag IDs to associate with the updated article.
+     * @return bool Whether the update was successful.
+     */
+    public function updateArticle($articleId, $articleUpdate, $arrayTagId)
     {
-        return $this->model->where('id', $articleId)->update($articleUpdate);
+        DB::beginTransaction();
+
+        try {
+            $article = $this->model->find($articleId);
+
+            $articleUpdateResponse = $this->model->where('id', $articleId)->update($articleUpdate);
+
+            if (!$arrayTagId) {
+                $article->tags()->detach();
+            } elseif ($articleUpdateResponse && $arrayTagId) {
+                $arrayTagIdOld = $article->tags->pluck('id')->toArray();
+                $checkUpdateTagId = array_diff($arrayTagId, $arrayTagIdOld) === array_diff($arrayTagIdOld, $arrayTagId);
+
+                if (!$checkUpdateTagId) {
+                    $article->tags()->detach();
+                    $article->tags()->attach($arrayTagId);
+                }
+            }
+
+            DB::commit();
+
+            return $articleUpdateResponse;
+        } catch (QueryException $e) {
+            DB::rollback();
+            Log::error('Error updating article: ' . $e->getMessage());
+
+            return false;
+        }
     }
 
     /**

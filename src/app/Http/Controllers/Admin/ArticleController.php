@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\ArticleService;
 use App\Services\Admin\CategoryService;
+use App\Services\Admin\TagService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -27,17 +28,27 @@ class ArticleController extends Controller
     protected $categoryService;
 
     /**
+     * The tag service instance.
+     *
+     * @var TagService
+     */
+    protected $tagService;
+
+    /**
      * Constructor for ArticleController class.
      *
      * @param ArticleService $articleService The article service instance.
      * @param CategoryService $categoryService The category service instance.
+     * @param TagService $tagService The tag service instance.
      */
     public function __construct(
         ArticleService $articleService,
-        CategoryService $categoryService
+        CategoryService $categoryService,
+        TagService $tagService,
     ) {
         $this->articleService = $articleService;
         $this->categoryService = $categoryService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -63,8 +74,9 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = $this->categoryService->getAllCategories();
+        $tags = $this->tagService->getAllTags();
 
-        return view('admin.article.create', compact('categories'));
+        return view('admin.article.create', compact('categories', 'tags'));
     }
 
     /**
@@ -96,7 +108,7 @@ class ArticleController extends Controller
         }
 
         // Attempt to create the article and redirect based on the result
-        if ($this->articleService->createArticle($articleCreate)) {
+        if ($this->articleService->createArticle($articleCreate, $request->tag_id)) {
             return redirect()->route('admin.article.index')->with('success', 'Thêm bài viết thành công');
         }
 
@@ -128,8 +140,9 @@ class ArticleController extends Controller
     {
         $article = $this->articleService->getArticle($id);
         $categories = $this->categoryService->getAllCategories();
+        $tags = $this->tagService->getAllTags();
 
-        return view('admin.article.update', compact('article', 'categories'));
+        return view('admin.article.update', compact('article', 'categories', 'tags'));
     }
 
     /**
@@ -158,7 +171,7 @@ class ArticleController extends Controller
             $articleUpdate['article_thumbnail'] = $articleThumbnail;
         }
 
-        if ($this->articleService->updateArticle($id, $articleUpdate)) {
+        if ($this->articleService->updateArticle($id, $articleUpdate, $request->tag_id)) {
             return redirect()->route('admin.article.index')->with('success', 'Cập nhật bài viết thành công');
         }
 

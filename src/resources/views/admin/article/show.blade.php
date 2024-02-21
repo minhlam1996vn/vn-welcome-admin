@@ -15,6 +15,11 @@
 
 @section('content')
     <div class="row">
+        @if ($article->tags)
+            @foreach ($article->tags as $tag)
+                <p>{{ $tag->tag_name }}</p>
+            @endforeach
+        @endif
         <div class="col-12 col-lg-8 d-none d-sm-block">
             <div class="card">
                 <div class="card-header pb-0">

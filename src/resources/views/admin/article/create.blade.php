@@ -50,8 +50,12 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Tag</label>
-                            <input type="text" name="tag_id[]" class="form-control" placeholder="Cài đặt tag">
+                            <label class="form-label">Tags</label>
+                            <select name="tag_id[]" id="article-tags" class="form-control" multiple>
+                                @foreach ($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Ảnh hiển thị</label>
@@ -90,46 +94,28 @@
         </div>
     </form>
 
-    <!--- Multiselect Dropdown  Bootstrap-->
-    <div class="row d-flex justify-content-center mt-100">
-        <div class="col-md-6">
-            <select id="choices-multiple-remove-button" placeholder="Select up to 3 tags" multiple>
-                <option value="1">Tag 1</option>
-                <option value="2">Tag 2</option>
-                <option value="3">Tag 3</option>
-                <option value="4">Tag 4</option>
-                <option value="5">Tag 5</option>
-                <option value="6">Tag 6</option>
-                <option value="7">Tag 7</option>
-                <option value="8">Tag 8</option>
-                <option value="9">Tag 9</option>
-                <option value="10">Tag 10</option>
-                <option value="13">Tag 11</option>
-                <option value="12">Tag 12</option>
-                <option value="13">Tag 13</option>
-                <option value="14">Tag 14</option>
-                <option value="15">Tag 15</option>
-                <option value="16">Tag 16</option>
-                <option value="17">Tag 17</option>
-                <option value="18">Tag 18</option>
-                <option value="19">Tag 19</option>
-                <option value="20">Tag 20</option>
-                <option value="21">Tag 21</option>
-                <option value="22">Tag 22</option>
-            </select>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
-    {{-- https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/quick-start.html --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/decoupled-document/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            var multipleCancelButton = new Choices(document.querySelector("#choices-multiple-remove-button"), {
+            var articleTags = document.querySelector("#article-tags");
+            var multipleCancelButton = new Choices(articleTags, {
                 removeItemButton: true,
+                maxItemCount: 3,
+                placeholder: true,
+                placeholderValue: 'Chọn tags...',
+                searchPlaceholderValue: 'Tìm kiếm tags...',
+                itemSelectText: 'Nhấn để chọn',
+                uniqueItemText: 'Tag này đã tồn tại.',
+                noResultsText: 'Không tìm thấy kết quả',
+                noChoicesText: 'Không có lựa chọn nào',
+                maxItemText: function(maxItemCount) {
+                    return 'Chỉ có thể thêm ' + (maxItemCount === 1 ? '1 tag' : maxItemCount + ' tags');
+                },
             });
         });
     </script>
