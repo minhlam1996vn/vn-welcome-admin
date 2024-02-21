@@ -42,6 +42,8 @@ class TagController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View The view for creating a new tag.
      */
     public function create()
     {
@@ -50,6 +52,9 @@ class TagController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param Request $request The HTTP request instance.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after storing the tag.
      */
     public function store(Request $request)
     {
@@ -68,7 +73,10 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request The HTTP request instance.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after storing the tag.
      */
     public function show(string $id)
     {
@@ -77,6 +85,9 @@ class TagController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param string $id The ID of the tag to be edited.
+     * @return \Illuminate\View\View The view for editing the tag.
      */
     public function edit(string $id)
     {
@@ -87,6 +98,10 @@ class TagController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param Request $request The HTTP request instance.
+     * @param string $id The ID of the tag to be updated.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after updating the tag.
      */
     public function update(Request $request, string $id)
     {
@@ -106,6 +121,9 @@ class TagController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param string $id The ID of the tag to be deleted.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after deleting the tag.
      */
     public function destroy(string $id)
     {
