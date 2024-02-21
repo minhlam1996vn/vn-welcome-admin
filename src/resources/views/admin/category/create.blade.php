@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', 'Cập nhật danh mục')
+@section('page-title', 'Thêm danh mục')
 
 @section('content')
     <form method="POST" action="{{ route('admin.category.store') }}">

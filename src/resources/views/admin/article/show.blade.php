@@ -15,11 +15,6 @@
 
 @section('content')
     <div class="row">
-        @if ($article->tags)
-            @foreach ($article->tags as $tag)
-                <p>{{ $tag->tag_name }}</p>
-            @endforeach
-        @endif
         <div class="col-12 col-lg-8 d-none d-sm-block">
             <div class="card">
                 <div class="card-header pb-0">
@@ -34,6 +29,17 @@
                         {!! $article->article_content !!}
                     </div>
                 </div>
+                @if ($article->tags->count() > 0)
+                    <div class="card-footer">
+                        <hr>
+                        <div>
+                            <span>Tags: </span>
+                            @foreach ($article->tags as $tag)
+                                <span class="btn btn-sm rounded-4 badge-primary-light mx-1">#{{ $tag->tag_name }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -51,6 +57,17 @@
                         {!! $article->article_content !!}
                     </div>
                 </div>
+                @if ($article->tags->count() > 0)
+                    <div class="card-footer">
+                        <hr>
+                        <div>
+                            <span>Tags: </span>
+                            @foreach ($article->tags as $tag)
+                                <span class="btn btn-sm rounded-4 badge-primary-light m-1">#{{ $tag->tag_name }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

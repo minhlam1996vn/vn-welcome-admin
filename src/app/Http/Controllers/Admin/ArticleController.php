@@ -135,6 +135,7 @@ class ArticleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param string $id The ID of the article to be edited.
+     * @return \Illuminate\View\View The view for editing the article.
      */
     public function edit(string $id)
     {

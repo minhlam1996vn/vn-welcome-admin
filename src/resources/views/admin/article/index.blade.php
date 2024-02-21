@@ -61,7 +61,8 @@
             <table class="table table-responsive table-striped" style="min-width: 1000px">
                 <thead>
                     <tr>
-                        <th style="width: 100px" class="text-center">#</th>
+                        <th style="width: 10px" class="text-center">#</th>
+                        <th style="width: 100px" class="text-center">Ảnh mô tả</th>
                         <th style="width: 200px">Tên bài viết</th>
                         <th>Danh mục</th>
                         <th style="width: 150px" class="text-center">Ngày tạo</th>
@@ -71,8 +72,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($articles as $key => $article)
+                    @forelse ($articles as $indexArticle => $article)
                         <tr>
+                            <td class="text-center">
+                                {{ $articles->firstItem() + $indexArticle }}
+                            </td>
                             <td>
                                 <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
                                     <img src="{{ $article->article_thumbnail }}" alt="{{ $article->article_title }}"
@@ -117,7 +121,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="8" class="text-center">
                                 Không có dữ liệu hiển thị
                             </td>
                         </tr>

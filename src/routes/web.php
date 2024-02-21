@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,10 +26,10 @@ use Illuminate\Support\Facades\Route;
  * CLIENT
  */
 
-Auth::routes([
-    'register' => false,
-    'reset' => false,
-]);
+// Auth::routes([
+//     'register' => false,
+//     'reset' => false,
+// ]);
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
@@ -37,8 +38,10 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
  */
 
 Route::prefix('admin')->name('admin.')->group(function () {
+
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
         Route::post('/login', [LoginController::class, 'login'])->name('login');
     });
 
@@ -46,7 +49,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
         Route::resource('/category', CategoryController::class);
-        Route::post('/category/update-sort-categories', [CategoryController::class, 'updateSortCategories'])->name('category.updateSortCategories');
+
+        Route::post('/category/sort', [CategoryController::class, 'updateSortCategories'])->name('category.sort');
+
+        Route::resource('/tag', TagController::class);
 
         Route::resource('/article', ArticleController::class);
 
