@@ -99,7 +99,7 @@ class ArticleService extends BaseService
         try {
             $article = $this->model->find($articleId);
 
-            if ($articleUpdate['article_thumbnail']) {
+            if (isset($articleUpdate['article_thumbnail']) && $article->article_thumbnail) {
                 Storage::disk()->delete($article->article_thumbnail);
             }
 
