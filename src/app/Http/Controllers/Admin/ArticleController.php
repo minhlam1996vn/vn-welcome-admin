@@ -89,7 +89,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // Prepare data for creating a new article
         $articleCreate = [
             'uuid' => $request->uuid,
             'user_id' => Auth::guard('admin')->id(),
@@ -102,15 +101,11 @@ class ArticleController extends Controller
             'publication_date' => $request->is_public ? Carbon::now() : null,
         ];
 
-        // Check if an article thumbnail is provided in the request
-        if ($request->article_thumbnail) {
-            $articleThumbnail = $this->articleService->uploadThumbnailArticle($request->article_thumbnail);
+        $tagId = $request->tag_id;
+        $fileUpload = $request->article_thumbnail;
+        $mediaUse = $request->img_path;
 
-            $articleCreate['article_thumbnail'] = $articleThumbnail;
-        }
-
-        // Attempt to create the article and redirect based on the result
-        if ($this->articleService->createArticle($articleCreate, $request->tag_id)) {
+        if ($this->articleService->createArticle($articleCreate, $tagId, $fileUpload, $mediaUse)) {
             return redirect()->route('admin.article.index')->with('success', 'Thêm bài viết thành công');
         }
 
@@ -121,6 +116,7 @@ class ArticleController extends Controller
      * Display the specified resource.
      *
      * @param string $id The ID of the article to be displayed.
+     * @return \Illuminate\View\View The view for displaying a specific article.
      */
     public function show(string $id)
     {
@@ -153,6 +149,7 @@ class ArticleController extends Controller
      *
      * @param Request $request The HTTP request instance.
      * @param string $id The ID of the article to be updated.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after updating the article.
      */
     public function update(Request $request, string $id)
     {
@@ -164,17 +161,13 @@ class ArticleController extends Controller
             'category_id' => $request->category_id,
         ];
 
-        if ($request->is_public) {
-            $articleUpdate['publication_date'] = Carbon::now();
-        }
+        $tagId = $request->tag_id;
+        $fileUpload = $request->article_thumbnail;
+        $mediaUse = $request->img_path;
 
-        if ($request->article_thumbnail) {
-            $articleThumbnail = $this->articleService->uploadThumbnailArticle($request->article_thumbnail);
+        if ($request->is_public) $articleUpdate['publication_date'] = Carbon::now();
 
-            $articleUpdate['article_thumbnail'] = $articleThumbnail;
-        }
-
-        if ($this->articleService->updateArticle($id, $articleUpdate, $request->tag_id)) {
+        if ($this->articleService->updateArticle($id, $articleUpdate, $tagId, $fileUpload, $mediaUse)) {
             return redirect()->route('admin.article.index')->with('success', 'Cập nhật bài viết thành công');
         }
 

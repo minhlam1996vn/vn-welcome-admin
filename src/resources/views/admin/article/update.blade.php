@@ -88,6 +88,7 @@
                         <div class="mb-3">
                             <label class="form-label">Nội dung</label>
                             <textarea name="article_content" class="d-none"></textarea>
+                            <textarea name="img_path" class="d-none"></textarea>
                             <div id="toolbar-container" class="shadow rounded"></div>
                             <div id="editor-article">{!! $article->article_content !!}</div>
                         </div>
@@ -223,6 +224,18 @@
             const sanitizedContent = tempDiv.innerHTML;
             const textareaElement = document.querySelector('textarea[name="article_content"]');
             textareaElement.value = sanitizedContent;
+
+            // Get the paths of all img elements
+            const imgPaths = [];
+            const imgElements = tempDiv.querySelectorAll('img');
+            imgElements.forEach((img) => {
+                const imgPath = img.getAttribute('src');
+                if (imgPath) {
+                    imgPaths.push(imgPath);
+                }
+            });
+            const textareaImgPathElement = document.querySelector('textarea[name="img_path"]');
+            textareaImgPathElement.value = imgPaths;
 
             // Submit the form with the ID "form-create-article"
             document.getElementById("form-create-article").submit();

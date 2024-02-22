@@ -84,6 +84,7 @@
                             <div id="toolbar-container" class="shadow rounded"></div>
                             <div id="editor-article"></div>
                             <textarea name="article_content" class="d-none"></textarea>
+                            <textarea name="img_path" class="d-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -227,6 +228,8 @@
                     imgPaths.push(imgPath);
                 }
             });
+            const textareaImgPathElement = document.querySelector('textarea[name="img_path"]');
+            textareaImgPathElement.value = imgPaths;
 
             // Submit the form with the ID "form-create-article"
             document.getElementById("form-create-article").submit();

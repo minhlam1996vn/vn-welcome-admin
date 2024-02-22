@@ -58,19 +58,31 @@ class ArticleService extends BaseService
     /**
      * Create a new article with optional tags.
      *
-     * @param array $inputs The input data for creating the article.
-     * @param array|null $arrayTagId An array of tag IDs to associate with the article.
+     * @param array $articleCreate The input data for creating the article.
+     * @param array|null $tagId An array of tag IDs to associate with the article.
+     * @param \Illuminate\Http\UploadedFile|null $fileUpload The uploaded file for the article thumbnail.
+     * @param string|null $mediaUse Comma-separated string of media filenames in use.
      * @return mixed The created article.
+     * @throws QueryException
      */
-    public function createArticle($inputs, $arrayTagId)
+    public function createArticle($articleCreate, $tagId, $fileUpload, $mediaUse)
     {
         DB::beginTransaction();
 
         try {
-            $article = $this->model->create($inputs);
+            if ($fileUpload) {
+                $articleCreate['article_thumbnail'] = $this->uploadThumbnailArticle($fileUpload);
+            }
 
-            if ($article && $arrayTagId) {
-                $article->tags()->attach($arrayTagId);
+            if ($mediaUse) {
+                $folderPath = 'medias/' . $articleCreate['uuid'];
+                $this->deleteMediaNotUse($folderPath, $mediaUse);
+            }
+
+            $article = $this->model->create($articleCreate);
+
+            if ($article && $tagId) {
+                $article->tags()->attach($tagId);
             }
 
             DB::commit();
@@ -79,41 +91,51 @@ class ArticleService extends BaseService
         } catch (QueryException $e) {
             DB::rollback();
             throw ($e);
-
-            return null;
         }
     }
 
     /**
-     * Update an existing article with optional tags.
+     * Update an existing article with optional tags, thumbnail, and media files.
      *
      * @param int $articleId The ID of the article to be updated.
      * @param array $articleUpdate The input data for updating the article.
-     * @param array|null $arrayTagId An array of tag IDs to associate with the updated article.
+     * @param array|null $tagId An array of tag IDs to associate with the updated article.
+     * @param \Illuminate\Http\UploadedFile|null $fileUpload The uploaded file for the article thumbnail.
+     * @param string|null $mediaUse Comma-separated string of media filenames in use.
      * @return bool Whether the update was successful.
+     * @throws QueryException
      */
-    public function updateArticle($articleId, $articleUpdate, $arrayTagId)
+    public function updateArticle($articleId, $articleUpdate, $tagId, $fileUpload, $mediaUse)
     {
         DB::beginTransaction();
 
         try {
             $article = $this->model->find($articleId);
 
-            if (isset($articleUpdate['article_thumbnail']) && $article->article_thumbnail) {
-                Storage::disk()->delete($article->article_thumbnail);
+            if ($fileUpload) {
+                $articleUpdate['article_thumbnail'] = $this->uploadThumbnailArticle($fileUpload);
+
+                if ($article->article_thumbnail) {
+                    Storage::delete($article->article_thumbnail);
+                }
+            }
+
+            if ($mediaUse) {
+                $folderPath = 'medias/' . $article->uuid;
+                $this->deleteMediaNotUse($folderPath, $mediaUse);
             }
 
             $articleUpdateResponse = $this->model->where('id', $articleId)->update($articleUpdate);
 
-            if (!$arrayTagId) {
+            if (!$tagId) {
                 $article->tags()->detach();
-            } elseif ($articleUpdateResponse && $arrayTagId) {
+            } elseif ($articleUpdateResponse && $tagId) {
                 $arrayTagIdOld = $article->tags->pluck('id')->toArray();
-                $checkUpdateTagId = array_diff($arrayTagId, $arrayTagIdOld) === array_diff($arrayTagIdOld, $arrayTagId);
+                $checkUpdateTagId = array_diff($tagId, $arrayTagIdOld) === array_diff($arrayTagIdOld, $tagId);
 
                 if (!$checkUpdateTagId) {
                     $article->tags()->detach();
-                    $article->tags()->attach($arrayTagId);
+                    $article->tags()->attach($tagId);
                 }
             }
 
@@ -123,8 +145,6 @@ class ArticleService extends BaseService
         } catch (QueryException $e) {
             DB::rollback();
             throw ($e);
-
-            return false;
         }
     }
 
@@ -139,5 +159,29 @@ class ArticleService extends BaseService
         $path = Storage::put('articles', $fileUpload);
 
         return $path;
+    }
+
+    /**
+     * Delete unused media files from the specified folder.
+     *
+     * @param string $folderPath The folder path containing media files.
+     * @param string $mediaUse Comma-separated string of media filenames in use.
+     * @return void
+     */
+    public function deleteMediaNotUse($folderPath, $mediaUse)
+    {
+        $files = Storage::files($folderPath);
+        $arrayImgPath = explode(',', $mediaUse);
+
+        $uniqueFiles = array_diff(
+            array_map('basename', $files),
+            array_map('basename', $arrayImgPath)
+        );
+
+        if (!empty($uniqueFiles)) {
+            foreach ($uniqueFiles as $file) {
+                Storage::delete($folderPath . '/' . $file);
+            }
+        }
     }
 }
