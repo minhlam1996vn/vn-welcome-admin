@@ -19,7 +19,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    @vite(['resources/css/admin.css', 'resources/css/custom.css'])
+    <link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/custom.css') }}">
     @stack('styles')
 </head>
 
@@ -59,7 +60,7 @@
         </div>
     </div>
 
-    @vite(['resources/js/admin.js'])
+    <script src="{{ asset('build/js/admin.js') }}"></script>
     @stack('scripts')
 </body>
 
