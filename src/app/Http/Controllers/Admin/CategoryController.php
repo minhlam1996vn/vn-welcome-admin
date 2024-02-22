@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Services\Admin\CategoryService;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -72,10 +73,13 @@ class CategoryController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param string $id The ID of the resource to be displayed.
+     * @return \Illuminate\Http\Response
      */
     public function show(string $id)
     {
-        //
+        abort(Response::HTTP_NOT_FOUND);
     }
 
     /**

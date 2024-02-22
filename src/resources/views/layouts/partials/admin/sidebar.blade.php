@@ -10,14 +10,19 @@
         <div class="sidebar-user">
             <div class="d-flex justify-content-center">
                 <div class="flex-shrink-0">
-                    <img src="https://demo.adminkit.io/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
-                        alt="Charles Hall" />
+                    <a href="{{ route('admin.profile.index') }}">
+                        <div
+                            class="d-flex justify-content-center align-items-center avatar img-fluid rounded me-1 border rounded-circle">
+                            <i class="text-light align-middle" data-feather="user"></i>
+                        </div>
+                        {{-- <img src="https://demo.adminkit.io/img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" /> --}}
+                    </a>
                 </div>
                 <div class="flex-grow-1 ps-2">
                     <span class="sidebar-user-title">
-                        Minh Lâm
+                        {{ Auth::guard('admin')->user()->name }}
                     </span>
-                    <div class="sidebar-user-subtitle">Admin</div>
+                    <div class="sidebar-user-subtitle">{{ Auth::guard('admin')->user()->email }}</div>
                 </div>
             </div>
         </div>

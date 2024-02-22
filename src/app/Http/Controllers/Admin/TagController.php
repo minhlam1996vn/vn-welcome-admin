@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TagRequest;
 use App\Services\Admin\TagService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class TagController extends Controller
@@ -74,14 +75,14 @@ class TagController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display the specified resource.
      *
-     * @param Request $request The HTTP request instance.
-     * @return \Illuminate\Http\RedirectResponse The redirect response after storing the tag.
+     * @param string $id The ID of the resource to be displayed.
+     * @return \Illuminate\Http\Response
      */
     public function show(string $id)
     {
-        //
+        abort(Response::HTTP_NOT_FOUND);
     }
 
     /**

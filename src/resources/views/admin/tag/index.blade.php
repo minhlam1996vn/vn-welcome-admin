@@ -65,7 +65,7 @@
                                 {{ $tags->firstItem() + $indexTag }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.tag.show', $tag->id) }}" data-bs-toggle="tooltip"
+                                <a href="{{ route('admin.article.index') }}" data-bs-toggle="tooltip"
                                     data-bs-placement="top" data-bs-title="{{ $tag->tag_name }}">
                                     {{ Str::limit($tag->tag_name, 50, '...') }}
                                 </a>
