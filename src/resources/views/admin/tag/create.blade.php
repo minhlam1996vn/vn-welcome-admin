@@ -14,6 +14,11 @@
                             <span class="text-danger">(*)</span>
                             <input type="text" name="tag_name" value="" class="form-control"
                                 placeholder="Nhập tên tag">
+                            @error('tag_name')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">

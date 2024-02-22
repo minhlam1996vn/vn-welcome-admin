@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Services\Admin\CategoryService;
 
 class CategoryController extends Controller
@@ -55,10 +56,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request The HTTP request instance.
+     * @param CategoryRequest $request The HTTP request instance.
      * @return \Illuminate\Http\RedirectResponse The redirect response after storing the category.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $inputs = $request->except('_token');
 
@@ -98,7 +99,7 @@ class CategoryController extends Controller
      * @param string $id The ID of the category to be updated.
      * @return \Illuminate\Http\RedirectResponse The redirect response after updating the category.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         $categoryUpdate = [
             'category_name' => $request->category_name,

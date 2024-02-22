@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ArticleRequest;
 use App\Services\Admin\ArticleService;
 use App\Services\Admin\CategoryService;
 use App\Services\Admin\TagService;
@@ -87,7 +88,7 @@ class ArticleController extends Controller
      * @param Request $request The HTTP request instance.
      * @return \Illuminate\Http\RedirectResponse The redirect response after storing the article.
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
         $articleCreate = [
             'uuid' => $request->uuid,
@@ -151,7 +152,7 @@ class ArticleController extends Controller
      * @param string $id The ID of the article to be updated.
      * @return \Illuminate\Http\RedirectResponse The redirect response after updating the article.
      */
-    public function update(Request $request, string $id)
+    public function update(ArticleRequest $request, string $id)
     {
         $articleUpdate = [
             'article_title' => $request->article_title,

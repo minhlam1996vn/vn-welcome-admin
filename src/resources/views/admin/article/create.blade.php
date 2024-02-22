@@ -15,7 +15,12 @@
                             <label class="form-label">Tiêu đề</label>
                             <span class="text-danger">(*)</span>
                             <input type="text" name="article_title" class="form-control"
-                                placeholder="Nhập tiêu đề bài viết">
+                                value="{{ old('article_title') }}" placeholder="Nhập tiêu đề bài viết">
+                            @error('article_title')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -47,8 +52,13 @@
                             <span class="text-danger">(*)</span>
                             <select class="form-select" name="category_id">
                                 <option value="">--- Chọn danh mục ---</option>
-                                {{ showCategories($categories) }}
+                                {{ showCategories($categories, 0, null, old('category_id')) }}
                             </select>
+                            @error('category_id')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tags</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\TagRequest;
 use App\Services\Admin\TagService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -56,7 +57,7 @@ class TagController extends Controller
      * @param Request $request The HTTP request instance.
      * @return \Illuminate\Http\RedirectResponse The redirect response after storing the tag.
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
         $tagCreate = [
             'tag_name' => $request->tag_name,
@@ -103,7 +104,7 @@ class TagController extends Controller
      * @param string $id The ID of the tag to be updated.
      * @return \Illuminate\Http\RedirectResponse The redirect response after updating the tag.
      */
-    public function update(Request $request, string $id)
+    public function update(TagRequest $request, string $id)
     {
         $tagUpdate = [
             'tag_name' => $request->tag_name,

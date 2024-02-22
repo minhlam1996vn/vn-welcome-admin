@@ -17,6 +17,11 @@
                             <span class="text-danger">(*)</span>
                             <input type="text" name="article_title" value="{{ $article->article_title }}"
                                 class="form-control" placeholder="Nhập tiêu đề bài viết">
+                            @error('article_title')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -51,6 +56,11 @@
                                 <option value="">--- Chọn danh mục ---</option>
                                 {{ showCategories($categories, 0, null, $article->category_id) }}
                             </select>
+                            @error('category_id')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tags</label>
@@ -104,7 +114,6 @@
 @endsection
 
 @push('scripts')
-    {{-- https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/quick-start.html --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/decoupled-document/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

@@ -12,18 +12,23 @@
                         <div class="mb-3">
                             <label class="form-label">Tên danh mục</label>
                             <span class="text-danger">(*)</span>
-                            <input type="text" name="category_name" value="" class="form-control"
-                                placeholder="Nhập tên danh mục">
+                            <input type="text" name="category_name" value="{{ old('category_name') }}"
+                                class="form-control" placeholder="Nhập tên danh mục">
+                            @error('category_name')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Mô tả danh mục</label>
-                            <textarea name="category_description" class="form-control" rows="2"></textarea>
+                            <textarea name="category_description" class="form-control" rows="2">{{ old('category_description') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Từ khóa danh mục</label>
-                            <textarea name="category_keywords" class="form-control" rows="2"></textarea>
+                            <textarea name="category_keywords" class="form-control" rows="2">{{ old('category_keywords') }}</textarea>
                         </div>
 
                         <div class="mb-3">
@@ -31,7 +36,8 @@
                             <select class="form-select" name="parent_id">
                                 <option value="">--- Mặc định ---</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    <option {{ old('parent_id') == $category->id ? 'selected' : '' }}
+                                        value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>

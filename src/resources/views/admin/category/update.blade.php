@@ -13,8 +13,14 @@
                         <div class="mb-3">
                             <label class="form-label">Tên danh mục</label>
                             <span class="text-danger">(*)</span>
-                            <input type="text" name="category_name" value="{{ $category->category_name }}"
-                                class="form-control" placeholder="Nhập tên danh mục">
+                            <input type="text" name="category_name"
+                                value="{{ old('category_name') ?? $category->category_name }}" class="form-control"
+                                placeholder="Nhập tên danh mục">
+                            @error('category_name')
+                                <div class="mt-1 text-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
