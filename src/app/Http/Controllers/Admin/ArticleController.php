@@ -9,6 +9,7 @@ use App\Services\Admin\CategoryService;
 use App\Services\Admin\TagService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -73,10 +74,11 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        $uuid = Session::get('uuid') ?? Str::uuid();
         $categories = $this->categoryService->getAllCategories();
         $tags = $this->tagService->getAllTags();
 
-        return view('admin.article.create', compact('categories', 'tags'));
+        return view('admin.article.create', compact('categories', 'tags', 'uuid'));
     }
 
     /**

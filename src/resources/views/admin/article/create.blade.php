@@ -6,7 +6,7 @@
     <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <input type="hidden" name="uuid" value="{{ Str::uuid() }}">
+        <input type="hidden" name="uuid" value="{{ $uuid }}">
         <div class="row">
             <div class="col-12 col-lg-8 mb-4">
                 <div class="card h-100 position-relative overflow-hidden">
@@ -127,7 +127,7 @@
                 language: 'vi',
                 placeholder: 'Nhập nội dung chi tiết!',
                 ckfinder: {
-                    uploadUrl: "{{ route('admin.media.upload', ['_token' => csrf_token()]) }}",
+                    uploadUrl: "{{ route('admin.media.upload', ['_token' => csrf_token()]) }}&uuid={{ $uuid }}",
                 },
                 fontFamily: {
                     options: [
@@ -217,6 +217,16 @@
             const sanitizedContent = tempDiv.innerHTML;
             const textareaElement = document.querySelector('textarea[name="article_content"]');
             textareaElement.value = sanitizedContent;
+
+            // Get the paths of all img elements
+            const imgPaths = [];
+            const imgElements = tempDiv.querySelectorAll('img');
+            imgElements.forEach((img) => {
+                const imgPath = img.getAttribute('src');
+                if (imgPath) {
+                    imgPaths.push(imgPath);
+                }
+            });
 
             // Submit the form with the ID "form-create-article"
             document.getElementById("form-create-article").submit();

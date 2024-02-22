@@ -17,18 +17,13 @@ class MediaController extends Controller
     public function upload(Request $request)
     {
         if ($request->hasFile('upload')) {
-            // Get the original file name
+            $uuid = $request->uuid;
             $fileName = $request->file('upload')->getClientOriginalName();
 
-            // Store the uploaded file in the 'media/articles' directory
-            $path = Storage::disk()->put('media', $request->file('upload'));
+            $path = Storage::put('medias/' . $uuid, $request->file('upload'));
+            $url = Storage::url($path);
 
-            // Get the URL of the stored file
-            // $url = Storage::url($path);
-            $url = '/storage/' . $path;
-
-            // Return a JSON response with file information
-            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+            return response()->json(['fileName' => $fileName, 'uploaded' => true, 'url' => $url]);
         }
     }
 }

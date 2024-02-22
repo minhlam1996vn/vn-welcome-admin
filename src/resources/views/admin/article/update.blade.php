@@ -133,7 +133,7 @@
                 language: 'vi',
                 placeholder: 'Nhập nội dung chi tiết!',
                 ckfinder: {
-                    uploadUrl: "{{ route('admin.media.upload', ['_token' => csrf_token()]) }}",
+                    uploadUrl: "{{ route('admin.media.upload', ['_token' => csrf_token()]) }}&uuid={{ $article->uuid }}",
                 },
                 fontFamily: {
                     options: [
