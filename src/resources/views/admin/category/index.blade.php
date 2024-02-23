@@ -108,8 +108,8 @@
 @endsection
 
 @push('scripts')
-    <script src="https://unpkg.com/sortablejs-make/Sortable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="{{ asset('build/js/lib/sortable.min.js') }}"></script>
+    <script src="{{ asset('build/js/lib/jquery-sortable.js') }}"></script>
     <script>
         /* ---- SORTTABLE ---- */
         $('#list-category').sortable({

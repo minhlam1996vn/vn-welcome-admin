@@ -114,9 +114,8 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/decoupled-document/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/translations/vi.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{{ asset('build/js/lib/ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('build/js/lib/ckeditor5/vi.js') }}"></script>
     <script>
         $(document).ready(function() {
             var articleTags = document.querySelector("#article-tags");

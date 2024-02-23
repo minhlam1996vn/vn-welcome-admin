@@ -10,7 +10,7 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('build/css/editor.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/lib/content-styles.css') }}">
 @endpush
 
 @section('content')
