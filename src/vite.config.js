@@ -5,20 +5,25 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/sass/app.scss', 'resources/js/app.js'],
+            input: [
+                'resources/sass/app.scss',
+                'resources/js/app.js'
+            ],
             refresh: true,
         }),
         viteStaticCopy({
             targets: [
                 {
-                    src: 'resources/js/admin.js',
+                    src: [
+                        'resources/js/admin.js',
+                    ],
                     dest: 'js'
                 },
                 {
                     src: [
                         'resources/css/admin.css',
                         'resources/css/custom.css',
-                        'resources/css/content-styles.css'
+                        'resources/css/editor.css',
                     ],
                     dest: 'css'
                 },

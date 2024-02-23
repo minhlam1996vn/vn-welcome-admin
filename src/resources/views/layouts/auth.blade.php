@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    @vite(['resources/css/admin.css'])
+    <link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">
 </head>
 
 <body>
@@ -40,7 +40,7 @@
             </div>
         </main>
 
-        @vite(['resources/js/admin.js'])
+        <script src="{{ asset('build/js/admin.js') }}"></script>
     </div>
 </body>
 

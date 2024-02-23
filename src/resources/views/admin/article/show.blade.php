@@ -10,7 +10,7 @@
 @endsection
 
 @push('styles')
-    @vite(['resources/css/content-styles.css'])
+    <link rel="stylesheet" href="{{ asset('build/css/editor.css') }}">
 @endpush
 
 @section('content')
