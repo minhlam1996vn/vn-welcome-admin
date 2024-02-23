@@ -32,8 +32,6 @@
             @include('layouts.partials.admin.header')
 
             <main class="content p-xl-4">
-                <x-alert />
-
                 <div class="container-fluid p-0">
                     <div class="row mt-3 mb-4">
                         <div class="col-auto">
@@ -59,6 +57,9 @@
             @include('layouts.partials.admin.footer')
         </div>
     </div>
+
+    <x-alert />
+    <x-modal-crop-image />
 
     <script src="{{ asset('build/js/admin.js') }}"></script>
     @stack('scripts')

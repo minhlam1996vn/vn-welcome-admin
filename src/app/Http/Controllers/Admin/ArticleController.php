@@ -103,10 +103,10 @@ class ArticleController extends Controller
         ];
 
         $tagId = $request->tag_id;
-        $fileUpload = $request->article_thumbnail;
+        $imageBase64 = $request->image_base64;
         $mediaUse = $request->img_path;
 
-        if ($this->articleService->createArticle($articleCreate, $tagId, $fileUpload, $mediaUse)) {
+        if ($this->articleService->createArticle($articleCreate, $tagId, $imageBase64, $mediaUse)) {
             return redirect()->route('admin.article.index')->with('success', 'Thêm bài viết thành công');
         }
 

@@ -5,10 +5,9 @@ namespace App\Services\Admin;
 use App\Services\BaseService;
 use App\Models\Article;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ArticleService extends BaseService
 {
@@ -60,18 +59,18 @@ class ArticleService extends BaseService
      *
      * @param array $articleCreate The input data for creating the article.
      * @param array|null $tagId An array of tag IDs to associate with the article.
-     * @param \Illuminate\Http\UploadedFile|null $fileUpload The uploaded file for the article thumbnail.
+     * @param string|null $imageBase64 The base64-encoded image data for the article thumbnail.
      * @param string|null $mediaUse Comma-separated string of media filenames in use.
      * @return mixed The created article.
      * @throws QueryException
      */
-    public function createArticle($articleCreate, $tagId, $fileUpload, $mediaUse)
+    public function createArticle($articleCreate, $tagId, $imageBase64, $mediaUse)
     {
         DB::beginTransaction();
 
         try {
-            if ($fileUpload) {
-                $articleCreate['article_thumbnail'] = $this->uploadThumbnailArticle($fileUpload);
+            if ($imageBase64) {
+                $articleCreate['article_thumbnail'] = $this->uploadImageBase64($imageBase64);
             }
 
             if ($mediaUse) {
@@ -157,6 +156,25 @@ class ArticleService extends BaseService
     public function uploadThumbnailArticle($fileUpload)
     {
         $path = Storage::put('articles', $fileUpload);
+
+        return $path;
+    }
+
+    /**
+     * Uploads an image from base64 data and returns the file path.
+     *
+     * @param string $imageBase64 The base64-encoded image data.
+     * @return string The file path of the uploaded image.
+     */
+    public function uploadImageBase64($imageBase64)
+    {
+        list($extension, $content) = explode(';', $imageBase64);
+        $tmpExtension = explode('/', $extension);
+        preg_match('/.([0-9]+) /', microtime(), $m);
+        $fileName = sprintf('%s%s.%s', Str::uuid() . date('YmdHis'), $m[1], $tmpExtension[1]);
+        $content = explode(',', $content)[1];
+        $path = 'articles/' . $fileName;
+        Storage::put($path, base64_decode($content));
 
         return $path;
     }

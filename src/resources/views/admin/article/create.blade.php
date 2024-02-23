@@ -2,6 +2,10 @@
 
 @section('page-title', 'Thêm mới bài viết')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('build/css/lib/cropper.min.css') }}" />
+@endpush
+
 @section('content')
     <form id="form-create-article" action="{{ route('admin.article.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -71,11 +75,12 @@
                         <div class="mb-3">
                             <label class="form-label">Ảnh hiển thị</label>
                             <div class="mt-1 rounded-4 border">
-                                <input type="file" onchange="previewImage(event)" id="article-thumbnail" accept="image/*"
-                                    name="article_thumbnail" class="d-none">
+                                <input type="file" id="article-thumbnail" accept="image/*" name="article_thumbnail"
+                                    class="d-none image">
+                                <input type="hidden" id="value-image-crop" name="image_base64">
                                 <label for="article-thumbnail"
                                     class="btn ratio ratio-16x9 overflow-hidden rounded-4 shadow-lg">
-                                    <img id="preview" src="https://placehold.jp/1280x720.png"
+                                    <img id="preview-image-crop" src="https://placehold.jp/1280x720.png"
                                         class="w-100 object-fit-cover">
                                 </label>
                             </div>
@@ -105,13 +110,14 @@
             <button type="button" onclick="createArticle()" class="btn btn-primary shadow">Thêm bài viết</button>
         </div>
     </form>
-
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('build/js/lib/cropper.min.js') }}"></script>
     <script src="{{ asset('build/js/lib/ckeditor5/ckeditor.js') }}"></script>
     <script src="{{ asset('build/js/lib/ckeditor5/vi.js') }}"></script>
     <script>
+        /* --- CHOISES TAG --- */
         $(document).ready(function() {
             var articleTags = document.querySelector("#article-tags");
             var multipleCancelButton = new Choices(articleTags, {
@@ -129,6 +135,65 @@
                 },
             });
         });
+        /* --- END CHOISES TAG --- */
+
+        /* --- CROP IMAGE --- */
+        var bs_modal = $('#modal');
+        var image = document.getElementById('image');
+        var cropper, reader, file;
+
+        $("body").on("change", ".image", function(e) {
+            var files = e.target.files;
+            var done = function(url) {
+                image.src = url;
+                bs_modal.modal('show');
+            };
+
+
+            if (files && files.length > 0) {
+                file = files[0];
+
+                if (URL) {
+                    done(URL.createObjectURL(file));
+                } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function(e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        bs_modal.on('shown.bs.modal', function() {
+            cropper = new Cropper(image, {
+                aspectRatio: 16 / 9,
+                viewMode: 3,
+            });
+        }).on('hidden.bs.modal', function() {
+            cropper.destroy();
+            cropper = null;
+        });
+
+        $("#crop-image").click(function() {
+            canvas = cropper.getCroppedCanvas({
+                // width: 1280,
+                // height: 720,
+            });
+
+            canvas.toBlob(function(blob) {
+                url = URL.createObjectURL(blob);
+                let reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    let base64data = reader.result;
+                    document.getElementById('preview-image-crop').src = base64data;
+                    document.getElementById('value-image-crop').value = base64data;
+                    bs_modal.modal('hide');
+                };
+            });
+        });
+        /* --- END CROP IMAGE --- */
 
         /* --- CKEDITOR --- */
         DecoupledEditor
@@ -241,22 +306,6 @@
 
             // Submit the form with the ID "form-create-article"
             document.getElementById("form-create-article").submit();
-        }
-
-        function previewImage(event) {
-            var input = event.target;
-            var preview = document.getElementById('preview');
-
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
         }
     </script>
 @endpush
