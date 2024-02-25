@@ -28,6 +28,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
+# Increase the PHP-FPM upload limits
+RUN echo "upload_max_filesize = 100M" >> /usr/local/etc/php/conf.d/uploads.ini
+RUN echo "post_max_size = 100M" >> /usr/local/etc/php/conf.d/uploads.ini
+
 # Define username and UID in the container
 ARG UID=1000
 ARG GID=1000
@@ -44,5 +48,5 @@ USER userdev
 # Expose port 9000 to be able to connect to nginx
 EXPOSE 9000
 
-# Enable php-fpm
+# Start PHP-FPM
 CMD ["php-fpm"]
