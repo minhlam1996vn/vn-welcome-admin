@@ -163,12 +163,12 @@ class ArticleController extends Controller
         ];
 
         $tagId = $request->tag_id;
-        $fileUpload = $request->article_thumbnail;
+        $imageBase64 = $request->image_base64;
         $mediaUse = $request->img_path;
 
         if ($request->is_public) $articleUpdate['publication_date'] = Carbon::now();
 
-        if ($this->articleService->updateArticle($id, $articleUpdate, $tagId, $fileUpload, $mediaUse)) {
+        if ($this->articleService->updateArticle($id, $articleUpdate, $tagId, $imageBase64, $mediaUse)) {
             return redirect()->route('admin.article.index')->with('success', 'Cập nhật bài viết thành công');
         }
 

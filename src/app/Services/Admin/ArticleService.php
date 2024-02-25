@@ -104,15 +104,15 @@ class ArticleService extends BaseService
      * @return bool Whether the update was successful.
      * @throws QueryException
      */
-    public function updateArticle($articleId, $articleUpdate, $tagId, $fileUpload, $mediaUse)
+    public function updateArticle($articleId, $articleUpdate, $tagId, $imageBase64, $mediaUse)
     {
         DB::beginTransaction();
 
         try {
             $article = $this->model->find($articleId);
 
-            if ($fileUpload) {
-                $articleUpdate['article_thumbnail'] = $this->uploadThumbnailArticle($fileUpload);
+            if ($imageBase64) {
+                $articleUpdate['article_thumbnail'] = $this->uploadImageBase64($imageBase64);
 
                 if ($article->article_thumbnail) {
                     Storage::delete($article->article_thumbnail);
@@ -145,19 +145,6 @@ class ArticleService extends BaseService
             DB::rollback();
             throw ($e);
         }
-    }
-
-    /**
-     * Uploads the thumbnail for an article and returns the URL.
-     *
-     * @param \Illuminate\Http\UploadedFile $fileUpload The uploaded file for the article thumbnail.
-     * @return string The URL of the uploaded article thumbnail.
-     */
-    public function uploadThumbnailArticle($fileUpload)
-    {
-        $path = Storage::put('articles', $fileUpload);
-
-        return $path;
     }
 
     /**
