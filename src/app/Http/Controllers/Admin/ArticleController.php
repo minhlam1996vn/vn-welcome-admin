@@ -63,9 +63,10 @@ class ArticleController extends Controller
     {
         $params = $request->all();
         $categories = $this->categoryService->getAllCategories();
+        $tags = $this->tagService->getAllTags();
         $articles = $this->articleService->getArticles($params);
 
-        return view('admin.article.index', compact('params', 'categories', 'articles'));
+        return view('admin.article.index', compact('params', 'categories', 'tags', 'articles'));
     }
 
     /**

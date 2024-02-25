@@ -34,6 +34,24 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-5">
+                        <div class="mb-3 d-flex align-items-center">
+                            <label style="width: 100px" for="search-tag" class="me-2">Thẻ</label>
+                            <div class="w-100">
+                                <select name="tag_id" id="search-tag" class="form-select">
+                                    <option value="">Tất cả các thẻ</option>
+                                    @foreach ($tags as $tag)
+                                        <option {{ $tag->id == request()->tag_id ? 'selected' : '' }}
+                                            value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                    </div>
                     <div class="col-12 col-md-2">
                         <div class="mb-3 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary border shadow">
@@ -63,10 +81,11 @@
                     <tr>
                         <th style="width: 10px" class="text-center">#</th>
                         <th style="width: 100px" class="text-center">Ảnh mô tả</th>
-                        <th style="width: 200px">Tên bài viết</th>
+                        <th>Tên bài viết</th>
                         <th>Danh mục</th>
-                        <th style="width: 150px" class="text-center">Ngày tạo</th>
-                        <th style="width: 150px" class="text-center">Ngày xuất bản</th>
+                        <th>Thẻ</th>
+                        <th style="width: 110px" class="text-center">Ngày tạo</th>
+                        <th style="width: 125px" class="text-center">Ngày xuất bản</th>
                         <th style="width: 100px" class="text-center">Trạng thái</th>
                         <th style="width: 100px"></th>
                     </tr>
@@ -93,6 +112,16 @@
                                 <a href="{{ route('admin.category.edit', $article->category->id) }}" class="text-info">
                                     {{ $article->category->category_name }}
                                 </a>
+                            </td>
+                            <td>
+                                @forelse ($article->tags as $tag)
+                                    <a href="{{ route('admin.tag.edit', $tag->id) }}"
+                                        class="btn btn-sm rounded-4 badge-primary-light my-1">
+                                        #{{ $tag->tag_name }}
+                                    </a>
+                                @empty
+                                    <span>-</span>
+                                @endforelse
                             </td>
                             <td class="text-center">
                                 {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}

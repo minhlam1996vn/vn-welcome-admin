@@ -65,7 +65,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Tags</label>
+                            <label class="form-label">Thẻ <small class="text-muted">(Chọn tối đa 3 thẻ)</small></label>
                             <select name="tag_id[]" id="article-tags" class="form-control" multiple>
                                 @foreach ($tags as $tag)
                                     <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
