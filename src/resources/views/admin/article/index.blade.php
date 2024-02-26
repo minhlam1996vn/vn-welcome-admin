@@ -133,7 +133,7 @@
                             <td>
                                 @forelse ($article->tags as $tag)
                                     <a href="{{ route('admin.tag.edit', $tag->id) }}"
-                                        class="btn btn-sm rounded-4 badge-primary-light my-1">
+                                        class="btn btn-sm rounded-4 badge-primary-light my-1 text-nowrap">
                                         #{{ $tag->tag_name }}
                                     </a>
                                 @empty

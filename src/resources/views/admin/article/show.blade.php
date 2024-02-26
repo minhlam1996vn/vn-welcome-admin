@@ -63,7 +63,7 @@
                         <div>
                             <span>Tags: </span>
                             @foreach ($article->tags as $tag)
-                                <span class="btn btn-sm rounded-4 badge-primary-light m-1">#{{ $tag->tag_name }}</span>
+                                <span class="btn btn-sm rounded-4 badge-primary-light m-1 text-nowrap">#{{ $tag->tag_name }}</span>
                             @endforeach
                         </div>
                     </div>
