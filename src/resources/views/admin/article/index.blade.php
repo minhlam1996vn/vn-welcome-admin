@@ -114,14 +114,15 @@
                                 {{ $articles->firstItem() + $indexArticle }}
                             </td>
                             <td>
-                                <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow">
+                                <div class="btn ratio ratio-16x9 overflow-hidden rounded-3 shadow" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" data-bs-title="{{ $article->article_title }}">
                                     <img src="{{ $article->article_thumbnail ? Storage::url($article->article_thumbnail) : 'https://placehold.jp/1280x720.png' }}"
                                         alt="{{ $article->article_title }}" class="w-100 object-fit-cover">
                                 </div>
                             </td>
                             <td>
                                 <a href="{{ route('admin.article.show', $article->id) }}" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" data-bs-title="{{ $article->article_title }}">
+                                    data-bs-placement="top" data-bs-title="Xem chi tiết">
                                     {{ Str::limit($article->article_title, 50, '...') }}
                                 </a>
                             </td>
