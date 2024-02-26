@@ -5,6 +5,7 @@ namespace App\Http\Resources\Article;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class ArticlesPopularResource extends ResourceCollection
 {
@@ -21,6 +22,7 @@ class ArticlesPopularResource extends ResourceCollection
                 "article_title" => $item->article_title,
                 "article_slug" => $item->article_slug,
                 "article_description" => $item->article_description,
+                "article_thumbnail" => Storage::url($item->article_thumbnail),
             ];
         })->toArray();
     }
