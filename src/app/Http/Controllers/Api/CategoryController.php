@@ -18,13 +18,18 @@ class CategoryController extends Controller
     /**
      * Constructor for CategoryController class.
      *
-     * @param CategoryService $categoryService The category service instance.
+     * @param CategoryService $categoryService The instance of the category service.
      */
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * Get top-level (parent) categories.
+     *
+     * @return CategoriesParentResource The resource collection of top-level categories.
+     */
     public function categoriesParent()
     {
         $categories = $this->categoryService->getCategoriesParent();

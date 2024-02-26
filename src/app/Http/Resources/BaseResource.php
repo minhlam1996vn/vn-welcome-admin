@@ -18,7 +18,14 @@ class BaseResource extends ResourceCollection
         return parent::toArray($request);
     }
 
-    public function withResponse(Request $request, JsonResponse $response)
+    /**
+     * Add pagination information to the response.
+     *
+     * @param Request $request The request instance.
+     * @param JsonResponse $response The JSON response instance.
+     * @return void
+     */
+    public function withResponse(Request $request, JsonResponse $response): void
     {
         $data = $response->getData(true);
 

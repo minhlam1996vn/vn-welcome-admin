@@ -20,7 +20,7 @@ class CategoryService extends BaseService
     /**
      * Get all top-level (parent) categories.
      *
-     * @return mixed The collection of top-level categories.
+     * @return \Illuminate\Database\Eloquent\Collection The collection of top-level categories.
      */
     public function getCategoriesParent()
     {
