@@ -25,6 +25,7 @@ class Article extends Model
         'article_thumbnail',
         'article_keywords',
         'publication_date',
+        'status',
     ];
 
     /**

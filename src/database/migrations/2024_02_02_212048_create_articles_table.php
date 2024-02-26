@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('article_thumbnail')->nullable();
             $table->text('article_keywords')->nullable();
             $table->datetime('publication_date')->nullable();
+            $table->unsignedInteger('status')->default(1)->comment('1: Not published, 2: Published, 3: Temporarily suspended');
             $table->softDeletes();
             $table->timestamps();
 

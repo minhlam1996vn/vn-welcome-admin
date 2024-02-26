@@ -4,6 +4,7 @@ namespace App\Services\Admin;
 
 use App\Services\BaseService;
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +12,17 @@ use Illuminate\Support\Str;
 
 class ArticleService extends BaseService
 {
+    /**
+     * Constants for article statuses.
+     *
+     * @var array
+     */
+    const ARTICLE_STATUS = [
+        'NOT_PUBLISHED' => 1,
+        'PUBLISHED' => 2,
+        'SUSPENDED' => 3,
+    ];
+
     /**
      * Constructor for ArticleService class.
      *
@@ -49,9 +61,27 @@ class ArticleService extends BaseService
             ->when(isset($params['article_title']), function ($query) use ($params) {
                 $query->where('article_title', 'like', '%' . $params['article_title'] . '%');
             })
+            ->when(isset($params['tag_id']), function ($query) use ($params) {
+                $query->whereHas('tags', function ($subquery) use ($params) {
+                    $subquery->where('tag_id', $params['tag_id']);
+                });
+            })
+            ->when(isset($params['status']), function ($query) use ($params) {
+                $query->where('status', $params['status']);
+            })
             ->orderBy('created_at', 'DESC')
             ->paginate($limit)
             ->withQueryString();
+    }
+
+    /**
+     * Get the total count of articles in the database.
+     *
+     * @return int The total count of articles.
+     */
+    public function getCountArticle()
+    {
+        return $this->model->count();
     }
 
     /**
@@ -69,6 +99,13 @@ class ArticleService extends BaseService
         DB::beginTransaction();
 
         try {
+            if ($articleCreate['status']) {
+                $articleCreate['publication_date'] = Carbon::now();
+                $articleCreate['status'] = self::ARTICLE_STATUS['PUBLISHED'];
+            } else {
+                $articleCreate['status'] = self::ARTICLE_STATUS['NOT_PUBLISHED'];
+            }
+
             if ($imageBase64) {
                 $articleCreate['article_thumbnail'] = $this->uploadImageBase64($imageBase64);
             }
@@ -110,6 +147,19 @@ class ArticleService extends BaseService
 
         try {
             $article = $this->model->find($articleId);
+
+            if ($articleUpdate['status']) {
+                if ($article->status == self::ARTICLE_STATUS['NOT_PUBLISHED']) {
+                    $articleUpdate['publication_date'] = Carbon::now();
+                    $articleUpdate['status'] = self::ARTICLE_STATUS['PUBLISHED'];
+                } elseif ($article->status == self::ARTICLE_STATUS['PUBLISHED']) {
+                    $articleUpdate['status'] = self::ARTICLE_STATUS['SUSPENDED'];
+                } else {
+                    $articleUpdate['status'] = self::ARTICLE_STATUS['PUBLISHED'];
+                }
+            } else {
+                $articleUpdate['status'] = $article->status;
+            }
 
             if ($imageBase64) {
                 $articleUpdate['article_thumbnail'] = $this->uploadImageBase64($imageBase64);

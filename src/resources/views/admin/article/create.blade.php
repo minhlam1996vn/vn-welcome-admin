@@ -38,8 +38,8 @@
                         </div>
 
                         <div class="mb-3 form-check">
-                            <input id="is-public" type="checkbox" name="is_public"
-                                class="form-check-input position-relative" style="top: 3px">
+                            <input id="is-public" type="checkbox" name="status" class="form-check-input position-relative"
+                                style="top: 3px" checked>
                             <label class="form-check-label" for="is-public">
                                 <span class="btn btn-sm btn-secondary rounded-3">Xuất bản ngay</span>
                             </label>

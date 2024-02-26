@@ -30,20 +30,32 @@
 
                         <div class="mb-3">
                             <label class="form-label">Mô tả</label>
-                            <textarea rows="3" name="article_description" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_description }}</textarea>
+                            <textarea rows="2" name="article_description" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_description }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Từ khóa</label>
-                            <textarea rows="3" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_keywords }}</textarea>
+                            <textarea rows="2" name="article_keywords" class="form-control" placeholder="Nhập phần mô tả bài viết">{{ $article->article_keywords }}</textarea>
                         </div>
 
                         <div class="mb-3 form-check">
-                            <input id="is-public" type="checkbox" name="is_public"
-                                class="form-check-input position-relative" style="top: 3px"
-                                {{ $article->publication_date ? 'checked disabled' : '' }}>
+                            <input id="is-public" type="checkbox" name="status" class="form-check-input position-relative"
+                                style="top: 3px">
                             <label class="form-check-label" for="is-public">
-                                <span class="btn btn-sm btn-secondary rounded-3">Xuất bản</span>
+                                @if ($article->status === 1 || $article->status === 3)
+                                    <span class="btn btn-sm btn-primary rounded-3">Xuất bản</span>
+                                @else
+                                    <span class="btn btn-sm btn-secondary rounded-3">Tạm dừng</span>
+                                @endif
+                            </label>
+                            <label>
+                                @if ($article->status === 1)
+                                    <span class="badge badge-secondary-light">Chưa xuất bản</span>
+                                @elseif($article->status === 2)
+                                    <span class="badge badge-success-light">Đã xuất bản</span>
+                                @else
+                                    <span class="badge badge-danger-light">Tạm dừng</span>
+                                @endif
                             </label>
                         </div>
                     </div>

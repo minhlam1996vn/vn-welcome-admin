@@ -29,7 +29,7 @@
                         <div class="mb-3 d-flex align-items-center">
                             <label style="width: 100px" for="search-article" class="me-2">Bài viết</label>
                             <div class="w-100">
-                                <input type="text" name="article_title" value="{{ $params['article_title'] ?? null }}"
+                                <input type="text" name="article_title" value="{{ request()->article_title }}"
                                     id="search-article" class="form-control" placeholder="Nhập tên bài viết tìm kiếm">
                             </div>
                         </div>
@@ -51,6 +51,23 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-5">
+                        <div class="mb-3 d-flex align-items-center">
+                            <label style="width: 100px" for="search-status" class="me-2">Trạng thái</label>
+                            <div class="w-100">
+                                <select name="status" id="search-status" class="form-select">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option {{ request()->status == 1 ? 'selected' : '' }} value="1">
+                                        Chưa xuất bản
+                                    </option>
+                                    <option {{ request()->status == 2 ? 'selected' : '' }} value="2">
+                                        Đã xuất bản
+                                    </option>
+                                    <option {{ request()->status == 3 ? 'selected' : '' }} value="3">
+                                        Tạm dừng
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="mb-3 d-flex justify-content-end">
@@ -85,8 +102,8 @@
                         <th>Danh mục</th>
                         <th>Thẻ</th>
                         <th style="width: 110px" class="text-center">Ngày tạo</th>
-                        <th style="width: 125px" class="text-center">Ngày xuất bản</th>
                         <th style="width: 100px" class="text-center">Trạng thái</th>
+                        <th style="width: 125px" class="text-center">Ngày xuất bản</th>
                         <th style="width: 100px"></th>
                     </tr>
                 </thead>
@@ -127,14 +144,16 @@
                                 {{ Carbon\Carbon::parse($article->created_at)->format('d-m-Y H:i:s') }}
                             </td>
                             <td class="text-center">
-                                {{ $article->publication_date ? Carbon\Carbon::parse($article->publication_date)->format('d-m-Y H:i:s') : '-' }}
+                                @if ($article->status === 1)
+                                    <span class="badge badge-secondary-light">Chưa xuất bản</span>
+                                @elseif($article->status === 2)
+                                    <span class="badge badge-success-light">Đã xuất bản</span>
+                                @else
+                                    <span class="badge badge-danger-light">Tạm dừng</span>
+                                @endif
                             </td>
                             <td class="text-center">
-                                @if ($article->publication_date)
-                                    <span class="badge badge-success-light">Hiển thị</span>
-                                @else
-                                    <span class="badge badge-secondary-light">Không hiển thị</span>
-                                @endif
+                                {{ $article->publication_date ? Carbon\Carbon::parse($article->publication_date)->format('d-m-Y H:i:s') : '-' }}
                             </td>
                             <td class="text-center">
                                 <a href="{{ route('admin.article.edit', $article->id) }}" data-bs-toggle="tooltip"
@@ -150,7 +169,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center">
+                            <td colspan="9" class="text-center">
                                 Không có dữ liệu hiển thị
                             </td>
                         </tr>

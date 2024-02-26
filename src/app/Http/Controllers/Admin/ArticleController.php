@@ -66,7 +66,7 @@ class ArticleController extends Controller
         $tags = $this->tagService->getAllTags();
         $articles = $this->articleService->getArticles($params);
 
-        return view('admin.article.index', compact('params', 'categories', 'tags', 'articles'));
+        return view('admin.article.index', compact('categories', 'tags', 'articles'));
     }
 
     /**
@@ -101,6 +101,7 @@ class ArticleController extends Controller
             'article_content' => $request->article_content,
             'category_id' => $request->category_id,
             'publication_date' => $request->is_public ? Carbon::now() : null,
+            'status' => $request->status,
         ];
 
         $tagId = $request->tag_id;
@@ -161,13 +162,12 @@ class ArticleController extends Controller
             'article_keywords' => $request->article_keywords,
             'article_content' => $request->article_content,
             'category_id' => $request->category_id,
+            'status' => $request->status,
         ];
 
         $tagId = $request->tag_id;
         $imageBase64 = $request->image_base64;
         $mediaUse = $request->img_path;
-
-        if ($request->is_public) $articleUpdate['publication_date'] = Carbon::now();
 
         if ($this->articleService->updateArticle($id, $articleUpdate, $tagId, $imageBase64, $mediaUse)) {
             return redirect()->route('admin.article.index')->with('success', 'Cập nhật bài viết thành công');
