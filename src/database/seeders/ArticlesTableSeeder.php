@@ -28,8 +28,10 @@ class ArticlesTableSeeder extends Seeder
                 'article_slug' => Str::slug($title),
                 'article_description' => 'Description: ' . $title,
                 'article_content' => $faker->paragraph,
-                'created_at' => $faker->dateTime(),
-                'updated_at' => $faker->dateTime()
+                'status' => 2,
+                'publication_date' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             $tagIdElements = rand(1, 3);
