@@ -95,12 +95,13 @@ class CategoryService extends BaseService
      */
     public function getCategories($params)
     {
-        return $this->model->query()
-            ->when(isset($params['category_name']), function ($query) use ($params) {
-                $query->where('category_name', 'like', '%' . $params['category_name'] . '%');
-            })
+        $categories = $this->model->query()
             ->orderBy('category_order')
             ->get();
+
+        $categories->load('childCategories', 'articles');
+
+        return $categories;
     }
 
     /**
