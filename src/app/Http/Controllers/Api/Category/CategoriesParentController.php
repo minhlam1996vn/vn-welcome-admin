@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Category\CategoriesParentResource;
 use App\Services\Api\CategoryService;
 
-class CategoryController extends Controller
+class CategoriesParentController extends Controller
 {
     /**
      * The category service instance.
@@ -16,7 +16,7 @@ class CategoryController extends Controller
     protected $categoryService;
 
     /**
-     * Constructor for CategoryController class.
+     * Constructor for ArticleController class.
      *
      * @param CategoryService $categoryService The instance of the category service.
      */
@@ -25,12 +25,7 @@ class CategoryController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    /**
-     * Get top-level (parent) categories.
-     *
-     * @return CategoriesParentResource The resource collection of top-level categories.
-     */
-    public function categoriesParent()
+    public function __invoke()
     {
         $categories = $this->categoryService->getCategoriesParent();
 

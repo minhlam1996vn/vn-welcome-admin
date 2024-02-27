@@ -26,4 +26,20 @@ class CategoryService extends BaseService
     {
         return $this->model->whereNull('parent_id')->orderBy('category_order')->get();
     }
+
+    /**
+     * Get top-level categories with their child categories and ordered by 'category_order'.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection The collection of top-level categories with child categories.
+     */
+    public function getCategoriesPopularWithArticlesNew()
+    {
+        $categoriesWithArticles = $this->model->query()
+            ->with(['childCategories' => function ($query) {
+                $query->orderBy('category_order');
+            }])
+            ->whereNull('parent_id')->orderBy('category_order')->get();
+
+        return $categoriesWithArticles;
+    }
 }
