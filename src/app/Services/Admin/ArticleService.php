@@ -54,7 +54,7 @@ class ArticleService extends BaseService
     {
         $limit = $params['limit'] ?? config('common.pagination.limit');
 
-        $articles = $this->model->query()
+        $articles = $this->model->with(['category', 'tags'])
             ->when(isset($params['category_id']), function ($query) use ($params) {
                 $query->where('category_id', $params['category_id']);
             })
@@ -72,8 +72,6 @@ class ArticleService extends BaseService
             ->orderBy('created_at', 'DESC')
             ->paginate($limit)
             ->withQueryString();
-
-        $articles->load(['tags', 'category']);
 
         return $articles;
     }

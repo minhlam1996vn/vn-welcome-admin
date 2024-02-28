@@ -37,13 +37,11 @@ class TagService extends BaseService
     {
         $limit = $params['limit'] ?? config('common.pagination.limit');
 
-        $tags = $this->model->query()
+        $tags = $this->model
             ->when(isset($params['tag_name']), function ($query) use ($params) {
                 $query->where('tag_name', 'like', '%' . $params['tag_name'] . '%');
             })
             ->orderBy('created_at', 'DESC')->paginate($limit)->withQueryString();
-
-        $tags->load('articles');
 
         return $tags;
     }

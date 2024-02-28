@@ -60,6 +60,9 @@
                 </thead>
                 <tbody>
                     @forelse ($tags as $indexTag => $tag)
+                        @php
+                            $articleCount = $tag->articles()->count();
+                        @endphp
                         <tr>
                             <td class="text-center">
                                 {{ $tags->firstItem() + $indexTag }}
@@ -71,7 +74,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                {{ $tag->articles->count() }}
+                                {{ $articleCount }}
                             </td>
                             <td class="text-center">
                                 {{ Carbon\Carbon::parse($tag->created_at)->format('d-m-Y H:i:s') }}
@@ -85,7 +88,7 @@
                                     class="btn btn-sm btn-secondary rounded">
                                     <i class="align-middle" data-feather="edit"></i>
                                 </a>
-                                @if ($tag->articles->count() === 0)
+                                @if ($articleCount === 0)
                                     <form action="{{ route('admin.tag.destroy', $tag->id) }}"
                                         method="POST"class="d-inline-block">
                                         @method('DELETE')

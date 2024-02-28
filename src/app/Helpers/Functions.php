@@ -34,8 +34,8 @@ function getCategories($categories, $parent_id = 0)
             $category = [
                 'id' => $item['id'],
                 'category_name' => $item['category_name'],
-                'article_count' => $item->articles->count(),
-                'category_children_count' => $item->childCategories->count(),
+                'article_count' => $item->articles()->count(),
+                'category_children_count' => $item->childCategories()->count(),
             ];
 
             unset($categories[$key]);

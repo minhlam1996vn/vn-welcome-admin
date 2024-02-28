@@ -99,8 +99,6 @@ class CategoryService extends BaseService
             ->orderBy('category_order')
             ->get();
 
-        $categories->load('childCategories', 'articles');
-
         return $categories;
     }
 
