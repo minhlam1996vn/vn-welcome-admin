@@ -36,4 +36,20 @@ class ArticleService extends BaseService
     {
         return $this->model->where('status', 2)->orderBy('publication_date', 'DESC')->limit(10)->get();
     }
+
+    public function getArticleDetail($articleSlug)
+    {
+        return $this->model->where('status', 2)->where('article_slug', $articleSlug)->firstOrFail();
+    }
+
+    public function getArticlesByCategory($categorySlug)
+    {
+        return $this->model->with('category')
+            ->whereHas('category', function ($query) use ($categorySlug) {
+                $query->where('category_slug', $categorySlug);
+            })
+            ->where('status', 2)
+            ->orderByDesc('publication_date')
+            ->paginate(20);
+    }
 }

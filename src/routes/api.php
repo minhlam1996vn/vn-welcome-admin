@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\Article\ArticleDetailController;
+use App\Http\Controllers\Api\Article\ArticlesByCategoryController;
 use App\Http\Controllers\Api\Article\ArticlesNewController;
 use App\Http\Controllers\Api\Article\ArticlesPopularController;
 use App\Http\Controllers\Api\Category\CategoriesParentController;
 use App\Http\Controllers\Api\Category\CategoriesPopularWithArticlesNewController;
+use App\Http\Controllers\Api\Category\CategoryDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +26,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/category')->group(function () {
+    Route::get('/detail/{slug}', CategoryDetailController::class);
     Route::get('/categories-parent', CategoriesParentController::class);
     Route::get('/categories-popular', CategoriesPopularWithArticlesNewController::class);
 });
 
 Route::prefix('/article')->group(function () {
+    Route::get('/detail/{slug}', ArticleDetailController::class);
     Route::get('/articles-new', ArticlesNewController::class);
     Route::get('/articles-popular', ArticlesPopularController::class);
+    Route::get('/articles-by-category/{slug}', ArticlesByCategoryController::class);
 });

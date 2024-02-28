@@ -20,9 +20,8 @@ class ArticlesNewController extends Controller
      *
      * @param ArticleService $articleService The instance of the article service.
      */
-    public function __construct(
-        ArticleService $articleService
-    ) {
+    public function __construct(ArticleService $articleService)
+    {
         $this->articleService = $articleService;
     }
 

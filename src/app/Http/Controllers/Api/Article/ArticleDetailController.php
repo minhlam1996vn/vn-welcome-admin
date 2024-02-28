@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\Article;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Article\ArticlesPopularResource;
+use App\Http\Resources\Article\ArticleDetailResource;
 use App\Services\Api\ArticleService;
+use Illuminate\Http\Request;
 
-class ArticlesPopularController extends Controller
+class ArticleDetailController extends Controller
 {
     /**
      * The article service instance.
@@ -25,10 +26,10 @@ class ArticlesPopularController extends Controller
         $this->articleService = $articleService;
     }
 
-    public function __invoke()
+    public function __invoke($articleSlug)
     {
-        $articlesPopular = $this->articleService->getArticlesPopular();
+        $articleDetail = $this->articleService->getArticleDetail($articleSlug);
 
-        return new ArticlesPopularResource($articlesPopular);
+        return new ArticleDetailResource($articleDetail);
     }
 }

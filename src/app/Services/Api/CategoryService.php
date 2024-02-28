@@ -42,4 +42,13 @@ class CategoryService extends BaseService
 
         return $categoriesWithArticles;
     }
+
+    public function getCategory($categorySlug)
+    {
+        return $this->model->query()
+            ->with(['childCategories' => function ($query) {
+                $query->orderBy('category_order');
+            }])->where('category_slug', $categorySlug)
+            ->firstOrFail();
+    }
 }
