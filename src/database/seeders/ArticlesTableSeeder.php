@@ -17,7 +17,7 @@ class ArticlesTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= 10000; $i++) {
             $title = $faker->sentence;
 
             $article = Article::create([
