@@ -25,6 +25,11 @@ class ArticlesNewController extends Controller
         $this->articleService = $articleService;
     }
 
+    /**
+     * Retrieve a collection of new articles.
+     *
+     * @return \App\Http\Resources\Article\ArticlesNewResource The resource for new articles.
+     */
     public function __invoke()
     {
         $articlesNew = $this->articleService->getArticlesNew();

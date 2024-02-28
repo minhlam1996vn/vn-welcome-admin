@@ -34,15 +34,19 @@ class CategoryService extends BaseService
      */
     public function getCategoriesPopularWithArticlesNew()
     {
-        $categoriesWithArticles = $this->model->query()
+        return $this->model->query()
             ->with(['childCategories' => function ($query) {
                 $query->orderBy('category_order');
             }])
             ->whereNull('parent_id')->orderBy('category_order')->get();
-
-        return $categoriesWithArticles;
     }
 
+    /**
+     * Get details of a specific category based on its slug.
+     *
+     * @param string $categorySlug The slug of the category.
+     * @return \Illuminate\Database\Eloquent\Model The category details.
+     */
     public function getCategory($categorySlug)
     {
         return $this->model->query()

@@ -26,6 +26,12 @@ class ArticleDetailController extends Controller
         $this->articleService = $articleService;
     }
 
+    /**
+     * Retrieve details of a specific article based on its slug.
+     *
+     * @param string $articleSlug The slug of the article.
+     * @return \App\Http\Resources\Article\ArticleDetailResource The resource for article details.
+     */
     public function __invoke($articleSlug)
     {
         $articleDetail = $this->articleService->getArticleDetail($articleSlug);

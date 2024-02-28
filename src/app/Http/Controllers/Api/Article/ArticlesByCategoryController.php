@@ -25,6 +25,12 @@ class ArticlesByCategoryController extends Controller
         $this->articleService = $articleService;
     }
 
+    /**
+     * Retrieve a paginated collection of articles based on a category slug.
+     *
+     * @param string $categorySlug The slug of the category.
+     * @return \App\Http\Resources\Article\ArticlesByCategoryResource The resource for articles in a specific category.
+     */
     public function __invoke($categorySlug)
     {
         $articles = $this->articleService->getArticlesByCategory($categorySlug);

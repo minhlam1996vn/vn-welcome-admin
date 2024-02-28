@@ -25,6 +25,11 @@ class ArticlesPopularController extends Controller
         $this->articleService = $articleService;
     }
 
+    /**
+     * Retrieve a collection of popular articles.
+     *
+     * @return \App\Http\Resources\Article\ArticlesPopularResource The resource for popular articles.
+     */
     public function __invoke()
     {
         $articlesPopular = $this->articleService->getArticlesPopular();

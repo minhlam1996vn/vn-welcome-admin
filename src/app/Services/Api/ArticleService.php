@@ -8,6 +8,27 @@ use App\Models\Article;
 class ArticleService extends BaseService
 {
     /**
+     * The limit for the number of popular articles to retrieve.
+     * 
+     * @var int
+     */
+    const ARTICLE_POPULAR_LIMIT = 8;
+
+    /**
+     * The limit for the number of new articles to retrieve.
+     * 
+     * @var int
+     */
+    const ARTICLE_NEW_LIMIT = 10;
+
+    /**
+     * The status code indicating that an article is public or published.
+     * 
+     * @var int
+     */
+    const ARTICLE_PUBLIC_STATUS = 2;
+
+    /**
      * Constructor for ArticleService class.
      *
      * @param Article $model The Article model instance.
@@ -24,7 +45,7 @@ class ArticleService extends BaseService
      */
     public function getArticlesPopular()
     {
-        return $this->model->limit(8)->get();
+        return $this->model->limit(self::ARTICLE_POPULAR_LIMIT)->get();
     }
 
     /**
@@ -34,21 +55,34 @@ class ArticleService extends BaseService
      */
     public function getArticlesNew()
     {
-        return $this->model->where('status', 2)->orderBy('publication_date', 'DESC')->limit(10)->get();
+        return $this->model->where('status', self::ARTICLE_PUBLIC_STATUS)->orderBy('publication_date', 'DESC')->limit(self::ARTICLE_NEW_LIMIT)->get();
     }
 
+
+    /**
+     * Get details of a specific article based on its slug.
+     *
+     * @param string $articleSlug The slug of the article.
+     * @return \Illuminate\Database\Eloquent\Model The article details.
+     */
     public function getArticleDetail($articleSlug)
     {
-        return $this->model->where('status', 2)->where('article_slug', $articleSlug)->firstOrFail();
+        return $this->model->where('status', self::ARTICLE_PUBLIC_STATUS)->where('article_slug', $articleSlug)->firstOrFail();
     }
 
+    /**
+     * Get a paginated collection of articles based on a category slug.
+     *
+     * @param string $categorySlug The slug of the category.
+     * @return \Illuminate\Pagination\LengthAwarePaginator The paginated collection of articles with the specified category.
+     */
     public function getArticlesByCategory($categorySlug)
     {
         return $this->model->with('category')
             ->whereHas('category', function ($query) use ($categorySlug) {
                 $query->where('category_slug', $categorySlug);
             })
-            ->where('status', 2)
+            ->where('status', self::ARTICLE_PUBLIC_STATUS)
             ->orderByDesc('publication_date')
             ->paginate(20);
     }

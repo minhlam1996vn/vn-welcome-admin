@@ -26,6 +26,11 @@ class CategoriesPopularWithArticlesNewController extends Controller
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * Retrieve top-level categories with their child categories and ordered by 'category_order'.
+     *
+     * @return \App\Http\Resources\Category\CategoriesPopularWithArticlesNewResource The resource for top-level categories with child categories.
+     */
     public function __invoke()
     {
         $categoriesWithArticles = $this->categoryService->getCategoriesPopularWithArticlesNew();

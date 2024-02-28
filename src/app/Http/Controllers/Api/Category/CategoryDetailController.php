@@ -25,6 +25,12 @@ class CategoryDetailController extends Controller
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * Retrieve details of a specific category.
+     *
+     * @param string $categorySlug The slug of the category.
+     * @return \App\Http\Resources\Category\CategoryDetailResource The category detail resource.
+     */
     public function __invoke($categorySlug)
     {
         $categoryDetail = $this->categoryService->getCategory($categorySlug);

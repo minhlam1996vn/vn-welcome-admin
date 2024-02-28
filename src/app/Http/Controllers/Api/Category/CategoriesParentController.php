@@ -25,6 +25,11 @@ class CategoriesParentController extends Controller
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * Retrieve all top-level (parent) categories.
+     *
+     * @return \App\Http\Resources\Category\CategoriesParentResource The resource for top-level categories.
+     */
     public function __invoke()
     {
         $categories = $this->categoryService->getCategoriesParent();
