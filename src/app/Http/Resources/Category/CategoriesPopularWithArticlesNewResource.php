@@ -17,7 +17,7 @@ class CategoriesPopularWithArticlesNewResource extends ResourceCollection
     public function toArray(Request $request): array
     {
         return $this->collection->map(function ($item) {
-            $articles = $item->articles()->where('status', 2)->orderByDesc('publication_date')->limit(5)->get();
+            $articles = $item->articles()->where('status', 2)->orderByDesc('publication_date')->limit(7)->get();
 
             return [
                 "id" => $item->id,
@@ -37,6 +37,11 @@ class CategoriesPopularWithArticlesNewResource extends ResourceCollection
                         "article_slug" => $item->article_slug,
                         "article_description" => $item->article_description,
                         "article_thumbnail" => $item->article_thumbnail ? Storage::url($item->article_thumbnail) : 'https://placehold.jp/1280x720.png',
+                        "category" => [
+                            "id" => $item->category->id,
+                            "category_name" => $item->category->category_name,
+                            "category_slug" => $item->category->category_slug,
+                        ],
                     ];
                 }),
             ];

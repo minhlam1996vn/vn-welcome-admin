@@ -38,7 +38,7 @@ class CategoryService extends BaseService
             ->with(['childCategories' => function ($query) {
                 $query->orderBy('category_order');
             }])
-            ->whereNull('parent_id')->orderBy('category_order')->get();
+            ->whereNull('parent_id')->orderBy('category_order')->limit(4)->get();
     }
 
     /**
