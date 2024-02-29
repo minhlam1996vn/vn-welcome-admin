@@ -35,6 +35,7 @@ class CategoriesPopularWithArticlesNewResource extends ResourceCollection
                         "id" => $item->id,
                         "article_title" => $item->article_title,
                         "article_slug" => $item->article_slug,
+                        "article_description" => $item->article_description,
                         "article_thumbnail" => $item->article_thumbnail ? Storage::url($item->article_thumbnail) : 'https://placehold.jp/1280x720.png',
                     ];
                 }),
