@@ -55,7 +55,9 @@ class ArticleService extends BaseService
      */
     public function getArticlesNew()
     {
-        return $this->model->where('status', self::ARTICLE_PUBLIC_STATUS)->orderBy('publication_date', 'DESC')->limit(self::ARTICLE_NEW_LIMIT)->get();
+        return $this->model->with('category')
+            ->where('status', self::ARTICLE_PUBLIC_STATUS)
+            ->orderBy('publication_date', 'DESC')->limit(self::ARTICLE_NEW_LIMIT)->get();
     }
 
 
