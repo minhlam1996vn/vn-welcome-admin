@@ -19,7 +19,7 @@ class ArticleService extends BaseService
      * 
      * @var int
      */
-    const ARTICLE_NEW_LIMIT = 10;
+    const ARTICLE_NEW_LIMIT = 20;
 
     /**
      * The status code indicating that an article is public or published.
