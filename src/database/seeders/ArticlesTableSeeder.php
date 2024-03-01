@@ -27,7 +27,7 @@ class ArticlesTableSeeder extends Seeder
                 'article_title' => $title,
                 'article_slug' => Str::slug($title),
                 'article_description' => $faker->sentence(20, 30),
-                'article_content' => $faker->randomHtml(3, 5),
+                'article_content' => $faker->paragraphs(5, true),
                 'status' => 2,
                 'publication_date' => now(),
                 'created_at' => now(),
