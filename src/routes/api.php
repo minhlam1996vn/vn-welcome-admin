@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\Article\ArticleDetailController;
 use App\Http\Controllers\Api\Article\ArticlesByCategoryController;
 use App\Http\Controllers\Api\Article\ArticlesNewController;
-use App\Http\Controllers\Api\Article\ArticlesPopularController;
 use App\Http\Controllers\Api\Category\CategoriesParentController;
 use App\Http\Controllers\Api\Category\CategoriesPopularWithArticlesNewController;
 use App\Http\Controllers\Api\Category\CategoryDetailController;
@@ -34,6 +33,5 @@ Route::prefix('/category')->group(function () {
 Route::prefix('/article')->group(function () {
     Route::get('/detail/{slug}', ArticleDetailController::class);
     Route::get('/articles-new', ArticlesNewController::class);
-    Route::get('/articles-popular', ArticlesPopularController::class);
     Route::get('/articles-by-category/{slug}', ArticlesByCategoryController::class);
 });
