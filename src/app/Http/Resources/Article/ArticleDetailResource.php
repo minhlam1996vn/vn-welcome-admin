@@ -25,7 +25,7 @@ class ArticleDetailResource extends JsonResource
             "article_description" => $this->article_description,
             "article_keywords" => $this->article_keywords,
             "article_content" => $this->article_content,
-            "article_thumbnail" => $this->article_thumbnail ? Storage::url($this->article_thumbnail) : 'https://source.unsplash.com/random/1280x720?cryptocurrency&' . $this->id,
+            "article_thumbnail" => $this->article_thumbnail ? Storage::url($this->article_thumbnail) : 'https://placehold.jp/1280x720.png',
             "publication_date" => $this->publication_date,
             "category" => [
                 "id" => $category->id,
