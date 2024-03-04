@@ -23,9 +23,9 @@ class CategoryDetailResource extends JsonResource
             "category_description" => $this->category_description,
             "categoriesChild" => $this->childCategories->map(function ($item) {
                 return [
-                    "id" => $this->id,
-                    "category_name" => $this->category_name,
-                    "category_slug" => $this->category_slug,
+                    "id" => $item->id,
+                    "category_name" => $item->category_name,
+                    "category_slug" => $item->category_slug,
                 ];
             }),
         ];
