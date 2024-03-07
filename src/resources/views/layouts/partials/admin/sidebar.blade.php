@@ -31,36 +31,36 @@
             <li class="sidebar-header">
                 QUẢN TRỊ
             </li>
-            <li class="sidebar-item {{ request()->segment(2) ? '' : 'active' }}">
+            <li class="sidebar-item {{ request()->segment(1) ? '' : 'active' }}">
                 <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i>
                     <span class="align-middle">Tổng quan</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ request()->segment(2) === 'article' ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->segment(1) === 'article' ? 'active' : '' }}">
                 <a data-bs-target="#article" data-bs-toggle="collapse"
-                    class="sidebar-link {{ request()->segment(2) === 'article' || request()->segment(2) === 'category' || request()->segment(2) === 'tag' ? '' : 'collapsed' }}">
+                    class="sidebar-link {{ request()->segment(1) === 'article' || request()->segment(1) === 'category' || request()->segment(1) === 'tag' ? '' : 'collapsed' }}">
                     <i class="align-middle" data-feather="layout"></i>
                     <span class="align-middle">Bài viết</span>
                 </a>
                 <ul id="article"
-                    class="sidebar-dropdown list-unstyled collapse {{ request()->segment(2) === 'article' || request()->segment(2) === 'category' || request()->segment(2) === 'tag' ? 'show' : '' }}"
+                    class="sidebar-dropdown list-unstyled collapse {{ request()->segment(1) === 'article' || request()->segment(1) === 'category' || request()->segment(1) === 'tag' ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
                     <li
-                        class="sidebar-item {{ request()->segment(2) === 'article' && !request()->segment(3) ? 'active' : '' }}">
+                        class="sidebar-item {{ request()->segment(1) === 'article' && !request()->segment(3) ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('admin.article.index') }}">Quản lý bài viết</a>
                     </li>
                     <li
-                        class="sidebar-item {{ request()->segment(2) === 'category' && !request()->segment(3) ? 'active' : '' }}">
+                        class="sidebar-item {{ request()->segment(1) === 'category' && !request()->segment(3) ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('admin.category.index') }}">Quản lý danh mục</a>
                     </li>
                     <li
-                        class="sidebar-item {{ request()->segment(2) === 'tag' && !request()->segment(3) ? 'active' : '' }}">
+                        class="sidebar-item {{ request()->segment(1) === 'tag' && !request()->segment(3) ? 'active' : '' }}">
                         <a class='sidebar-link' href="{{ route('admin.tag.index') }}">Quản lý tag</a>
                     </li>
                 </ul>
             </li>
-            <li class="sidebar-item {{ request()->segment(2) === 'profile' ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->segment(1) === 'profile' ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('admin.profile.index') }}">
                     <i class="align-middle" data-feather="user"></i>
                     <span class="align-middle">Hồ sơ</span>

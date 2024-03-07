@@ -31,13 +31,13 @@ use Illuminate\Support\Facades\Route;
 //     'reset' => false,
 // ]);
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
+// Route::get('/', [HomeController::class, 'index'])->name('index');
 
 /*
  * ADMIN
  */
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('/')->name('admin.')->group(function () {
 
     Route::middleware('guest:admin')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
