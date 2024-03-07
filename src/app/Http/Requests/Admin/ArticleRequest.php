@@ -34,4 +34,17 @@ class ArticleRequest extends FormRequest
             'category_id' => 'required',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'article_title' => 'tiêu đề',
+            'category_id' => 'danh mục',
+        ];
+    }
 }
