@@ -33,4 +33,17 @@ class TagRequest extends FormRequest
             'tag_name' => ['required', $uniqueRule, 'max:50'],
         ];
     }
+
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'tag_name' => 'tên thẻ',
+        ];
+    }
 }
