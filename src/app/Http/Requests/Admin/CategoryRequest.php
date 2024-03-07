@@ -33,4 +33,16 @@ class CategoryRequest extends FormRequest
             'category_name' => ['required', $uniqueRule, 'max:50'],
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'category_name' => 'tên danh mục',
+        ];
+    }
 }
