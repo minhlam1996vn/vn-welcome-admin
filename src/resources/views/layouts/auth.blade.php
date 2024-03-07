@@ -40,6 +40,8 @@
             </div>
         </main>
 
+        <x-alert />
+
         <script src="{{ asset('build/js/admin.js') }}"></script>
     </div>
 </body>

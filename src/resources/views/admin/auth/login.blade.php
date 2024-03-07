@@ -8,27 +8,24 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input id="email" type="email"
-                            class="form-control form-control-lg @error('email') is-invalid @enderror" name="email"
-                            placeholder="Nhập email của bạn" value="{{ old('email') }}" required autocomplete="email"
-                            autofocus>
+                        <input id="email" type="text" class="form-control form-control-lg" name="email"
+                            placeholder="Nhập email của bạn" value="{{ old('email') }}" autocomplete="email" autofocus>
 
                         @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <div class="text-danger mt-1" role="alert">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mật khẩu</label>
-                        <input id="password" type="password"
-                            class="form-control form-control-lg @error('password') is-invalid @enderror" name="password"
-                            placeholder="Nhập mật khẩu của bạn" required autocomplete="current-password">
+                        <input id="password" type="password" class="form-control form-control-lg" name="password"
+                            placeholder="Nhập mật khẩu của bạn" autocomplete="current-password">
 
                         @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <div class="text-danger mt-1" role="alert">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div>
